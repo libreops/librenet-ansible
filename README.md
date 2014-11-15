@@ -54,6 +54,13 @@ Currently we have the following supported tags:
 
 ## Usage
 
+## Dry run (check)
+
+It is always a good idea to check before you deploy. Just add the `--check` flag
+when running a playbook. You can also add `--diff` to see the changed diff.
+
+More info: <http://docs.ansible.com/playbooks_checkmode.html>
+
 ### Run all
 
 ```
