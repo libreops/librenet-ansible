@@ -1,0 +1,16 @@
+---
+# defaults file for mariadb
+mysql_user_home: /root
+mysql_root_username: root
+mysql_root_password: "thediasporaisinfinite"
+
+mysql_databases:
+  - name: diaspora_production
+    collation: utf8_general_ci
+    encoding: utf8
+
+mysql_users:
+  - name: librenet
+    host: localhost
+    password: "thediasporaisinfinite"
+    priv: "diaspora_production.*:ALL"

@@ -1,0 +1,10 @@
+---
+# handlers file for common
+
+- name: enable redis
+  sudo: yes
+  command: systemctl enable redis.service
+
+- name: restart redis
+  sudo: yes
+  command: systemctl restart redis.service

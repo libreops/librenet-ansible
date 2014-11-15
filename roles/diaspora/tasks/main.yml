@@ -1,0 +1,5 @@
+---
+# tasks file for diaspora
+- include: configure.yml
+- include: systemd.yml
+

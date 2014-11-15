@@ -1,0 +1,5 @@
+---
+# handlers file for nginx
+- name: restart nginx
+  sudo: yes
+  command: systemctl restart nginx

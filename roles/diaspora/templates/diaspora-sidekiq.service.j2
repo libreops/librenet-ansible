@@ -1,0 +1,22 @@
+[Unit]
+Description=Diaspora Sidekiq Worker
+Requires=redis.service
+After=redis.service network.target
+
+[Service]
+User={{ diaspora_user }}
+Group={{ diaspora_group }}
+SyslogIdentifier=diaspora-sidekiq
+WorkingDirectory={{ diaspora_dir }}
+Environment=RAILS_ENV=production
+
+CapabilityBoundingSet=
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=true
+
+ExecStart=/usr/bin/bundle exec "sidekiq -e production -L log/sidekiq.log >> log/sidekiq.log 2>&1"
+
+[Install]
+WantedBy=multi-user.target

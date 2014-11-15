@@ -1,0 +1,25 @@
+[Unit]
+Description=Diaspora Unicorn Server
+Requires=redis.service
+After=redis.service network.target
+
+[Service]
+User={{ diaspora_user }}
+Group={{ diaspora_group }}
+SyslogIdentifier=diaspora-unicorn
+WorkingDirectory={{ diaspora_dir }}
+PIDFile={{ unicorn_pid }}
+Environment=RAILS_ENV=production
+RuntimeDirectory=diaspora
+RuntimeDirectoryMode=775
+
+CapabilityBoundingSet=
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=true
+
+ExecStart=/usr/bin/bundle exec "unicorn_rails -c {{ diaspora_dir }}/config/unicorn.rb -E production"
+
+[Install]
+WantedBy=multi-user.target

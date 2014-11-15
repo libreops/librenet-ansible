@@ -1,0 +1,7 @@
+---
+# vars file for nginx
+
+sitename: "librenet.gr"
+ssl_cert: "/etc/ssl/librenet.gr/ssl-unified.crt"
+ssl_cert_key: "/etc/ssl/librenet.gr/ssl.key"
+diaspora_root: "/var/www/diaspora/public"

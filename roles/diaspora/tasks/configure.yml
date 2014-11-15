@@ -1,0 +1,35 @@
+---
+- name: Copy unicorn.rb and routes.rb
+  sudo: yes
+  sudo_user: diaspora
+  copy: src="{{ item.src }}" dest="{{ item.dest }}"
+  with_items:
+    - src: unicorn.rb
+      dest: "{{ diaspora_dir }}/config/unicorn.rb"
+    - src: routes.rb
+      dest: "{{ diaspora_dir }}/config/routes.rb"
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - unicorn
+    - routes
+
+- include_vars: private.yml
+  tags:
+    - diaspora
+    - config
+    - private
+
+- name: Copy diaspora.yml
+  sudo: yes
+  sudo_user: diaspora
+  template: src=diaspora.yml.j2 dest="{{ diaspora_dir }}/config/diaspora.yml"
+  notify:
+    - restart unicorn
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - private

@@ -1,0 +1,30 @@
+---
+# tasks file for nginx
+
+- name: Install nginx
+  sudo: yes
+  yum: name=nginx state=present
+  notify: restart nginx
+  tags:
+    - nginx
+
+- name: Copy configuration files
+  sudo: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 644
+  with_items:
+    - {
+      src: "../templates/nginx.conf.j2",
+      dest: "/etc/nginx/nginx.conf"
+      }
+    - {
+      src: "../templates/diaspora.conf.j2",
+      dest: "/etc/nginx/conf.d/diaspora.conf"
+      }
+  notify: restart nginx
+  tags:
+    - nginx

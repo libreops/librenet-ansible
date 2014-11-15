@@ -1,0 +1,8 @@
+---
+- hosts: librenet.gr
+
+  roles:
+    - common
+    - nginx
+    - mariadb
+    - diaspora

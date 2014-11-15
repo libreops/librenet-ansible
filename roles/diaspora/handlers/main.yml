@@ -1,0 +1,13 @@
+---
+# handlers file for diaspora
+- name: restart diaspora
+  sudo: yes
+  command: systemctl restart diaspora.target
+
+- name: restart unicorn
+  sudo: yes
+  command: systemctl restart unicorn
+
+- name: restart sidekiq
+  sudo: yes
+  command: systemctl restart sidekiq

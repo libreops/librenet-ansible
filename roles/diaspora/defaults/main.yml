@@ -1,0 +1,12 @@
+---
+# defaults file for diaspora
+
+diaspora_dir: /var/www/diaspora
+diaspora_user: diaspora
+diaspora_group: diaspora
+unicorn_pid: /var/run/diaspora/diaspora.pid
+sidekiq:
+  log: /var/log/diaspora/sidekiq.log
+
+sitename: https://librenet.gr/
+systemd_path: /usr/lib/systemd/system

@@ -1,0 +1,54 @@
+---
+# Diaspora systemd services
+- name: systemd|Copy diaspora.target
+  sudo: yes
+  copy:
+    src: diaspora.target
+    dest: "{{ systemd_path }}/diaspora.target"
+    owner: root
+    group: root
+    mode: 644
+  notify:
+    - restart diaspora
+  tags:
+    - diaspora
+    - config
+    - systemd
+
+- name: systemd|Copy sidekiq service
+  sudo: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 644
+  with_items:
+    - src: diaspora-sidekiq.service.j2
+      dest: "{{ systemd_path }}/diaspora-sidekiq.service"
+  notify:
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - systemd
+    - sidekiq
+
+- name: systemd|Copy unicorn service
+  sudo: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 644
+  with_items:
+    - src: diaspora-unicorn.service.j2
+      dest: "{{ systemd_path }}/diaspora-unicorn.service"
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - systemd
+    - unicorn
