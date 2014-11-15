@@ -56,7 +56,9 @@ Currently we have the following supported tags:
 
 ### Run all
 
+```
 ansible-playbook -i hosts site.yml -e 'ansible_ssh_port=$SSH_PORT' --ask-vault-pass
+```
 
 ### Nginx only changes
 
