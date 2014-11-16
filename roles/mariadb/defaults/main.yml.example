@@ -2,7 +2,7 @@
 # defaults file for mariadb
 mysql_user_home: /root
 mysql_root_username: root
-mysql_root_password: "thediasporaisinfinite"
+mysql_root_password: thediasporaisinfinite
 
 mysql_databases:
   - name: diaspora_production
@@ -12,5 +12,5 @@ mysql_databases:
 mysql_users:
   - name: librenet
     host: localhost
-    password: "thediasporaisinfinite"
+    password: thediasporaisinfinite
     priv: "diaspora_production.*:ALL"

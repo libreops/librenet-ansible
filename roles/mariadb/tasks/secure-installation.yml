@@ -5,11 +5,9 @@
   register: mycnf_file
 
 # 'localhost' needs to be the last item for idempotency, see
-# http://ansible.cc/docs/modules.html#mysql-user
+# http://docs.ansible.com/mysql_user_module.html
 - name: Update MySQL root password for all root accounts.
   mysql_user:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
     name: root
     host: "{{ item }}"
     password: "{{ mysql_root_password }}"
@@ -28,6 +26,8 @@
     owner: root
     group: root
     mode: 0600
+  tags:
+    - mycnf
 
 - name: Remove anonymous MySQL user.
   sudo: yes

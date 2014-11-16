@@ -1,38 +1,18 @@
-Role Name
-=========
+## MariaDB setup on CentOS7
 
-A brief description of the role goes here.
+Copy `defaults/main.yml.example` to `defaults/main.yml` and edit to include
+the right password for root user and/or a regular one.
 
-Requirements
-------------
+The [secure_installation task](tasks/secure-installation.yml) checks if there
+is a `/root/.my.cnf` file containing the root credentials needed to perform
+mysql actions.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+If not, guessing it's the first time mariadb runs, it updates
+the root password (which is empty on new installations) with the variable
+`mysql_root_password` in `defaults/main.yml`. It then copies the
+[`.my.cnf` template](templates/dot_my.cnf.j2) in `/root/.my.cnf` for
+subsequent runs.
 
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+If you already have changed the root password but don't have a `.my.cnf` file,
+run the playbook with `--tags=mycnf` which will only copy the template.
+Then, the secure_installation task will be idempotent.
