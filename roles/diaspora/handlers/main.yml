@@ -6,8 +6,8 @@
 
 - name: restart unicorn
   sudo: yes
-  command: systemctl restart unicorn
+  command: systemctl restart diaspora-unicorn.service
 
 - name: restart sidekiq
   sudo: yes
-  command: systemctl restart sidekiq
+  command: systemctl restart diaspora-sidekiq.service
