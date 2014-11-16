@@ -33,3 +33,17 @@
     - diaspora
     - config
     - private
+    - yaml
+
+- name: Copy database.yml
+  sudo: yes
+  sudo_user: diaspora
+  template: src=database.yml.j2 dest="{{ diaspora_dir }}/config/database.yml"
+  notify:
+    - restart unicorn
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - database
+    - yaml
