@@ -1,0 +1,35 @@
+---
+
+- hosts: all
+  sudo: yes
+  gather_facts: false
+  tasks:
+
+    - name: Restart unicorn
+      command: systemctl restart diaspora-unicorn.service
+      tags:
+        - unicorn
+        - diaspora
+
+    - name: Restart sidekiq
+      command: systemctl restart diaspora-sidekiq.service
+      tags:
+        - sidekiq
+        - diaspora
+
+    - name: Restart redis
+      command: systemctl restart redis.service
+      tags:
+        - redis
+        - diaspora
+
+    - name: Restart mariadb
+      command: systemctl restart mariadb.service
+      tags:
+        - mariadb
+        - mysql
+
+    - name: Restart ssh
+      command: systemctl restart sshd.service
+      tags:
+        - ssh

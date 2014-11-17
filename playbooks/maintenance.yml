@@ -1,0 +1,4 @@
+---
+# Perform a system update and restart all the services.
+- include: playbooks/system_update.yml
+- include: playbooks/restart_services.yml
