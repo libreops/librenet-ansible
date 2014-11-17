@@ -18,7 +18,7 @@ server {
 
     # Configure maximum picture size
     # Note that Diaspora has a client side check set at 4M
-    client_max_body_size 5M;
+    client_max_body_size 4M;
 
     ssl_certificate {{ ssl_cert }};
     ssl_certificate_key {{ ssl_cert_key }};
