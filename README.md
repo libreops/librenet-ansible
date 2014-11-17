@@ -21,8 +21,13 @@ Needed when no tags are given, or one of the following: `private`, `diaspora`,
 
 ### Non standard ssh port
 
-For extra security we do not use port 22. When running the playbooks, always
-include `-e "ansible_ssh_port=$SSH_PORT"`.
+For extra security we do not use port 22. There are two ways to provide
+our custom port.
+
+- When running the playbooks, include `-e "ansible_ssh_port=$SSH_PORT"`
+- Copy `hosts.example` to `hosts` and edit like `hostname:port`.
+
+The hosts file is excluded from git so that you don't give away the port.
 
 ### Deploy user
 
