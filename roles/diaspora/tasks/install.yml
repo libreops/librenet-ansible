@@ -1,0 +1,148 @@
+---
+
+- include_vars: private.yml
+- include_vars: ../../mariadb/defaults/main.yml
+  tags:
+    - diaspora
+    - config
+    - private
+
+- name: Install diaspora system dependencies
+  sudo: yes
+  yum: name="{{ item }}" state=present
+  with_items:
+    - git
+    - wget
+    - ImageMagick-devel
+    - redis
+    - nodejs
+    - ruby
+    - ruby-devel
+    - libxslt-devel
+    - libxml2-devel
+    - gcc
+  tags:
+    - diaspora
+
+- name: Install bundler
+  sudo: yes
+  gem: name=bundler state=present user_install=no
+  register: bundler
+  tags:
+    - gem
+    - bundler
+
+- name: Create bundle symlink to /usr/bin
+  sudo: yes
+  file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
+
+- name: Add diaspora user
+  sudo: yes
+  user: name=diaspora comment="Diaspora" shell=/bin/bash
+  register: add_user
+
+- name: Git checkout librenet branch
+  sudo: yes
+  sudo_user: diaspora
+  git: >
+    repo="{{ git_repo_url }}"
+    version="{{ git_branch }}"
+    dest="{{ diaspora_dir }}"
+  tags:
+    - git
+    - diaspora
+    - deploy
+  when: add_user|success
+
+- name: Install gem dependencies
+  sudo: yes
+  sudo_user: diaspora
+  shell: >
+    chdir="{{ diaspora_dir }}"
+    creates="{{ diaspora_dir }}"/vendor/bundle/
+    RAILS_ENV=production /usr/bin/bundle install --without test development --deployment
+  register: bundle_install
+  when: bundler|success
+  tags:
+    - gem
+    - bundler
+    - update
+
+- name: Copy diaspora.yml
+  sudo: yes
+  template: >
+    src=diaspora.yml.j2
+    dest="{{ diaspora_dir }}/config/diaspora.yml"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  notify:
+    - restart unicorn
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - private
+    - yaml
+    - unicorn
+    - sidekiq
+
+- name: Copy database.yml
+  sudo: yes
+  template: >
+    src=database.yml.j2
+    dest="{{ diaspora_dir }}/config/database.yml"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  register: database_yml
+  notify:
+    - restart unicorn
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - database
+    - yaml
+
+- name: Check if database is already populated
+  sudo: yes
+  command: test -f "/var/lib/mysql/{{ mysql_databases[0].name }}/aspects.frm"
+  ignore_errors: true
+  changed_when: false
+  register: init_seed
+  tags:
+    -database
+
+- name: Initial Seed of database (destructive, run only 1st time)
+  sudo: yes
+  sudo_user: diaspora
+  shell: >
+    chdir="{{ diaspora_dir }}"
+    RAILS_ENV=production  /usr/bin/bundle exec "rake db:create db:schema:load"
+  when: init_seed|failed
+  tags:
+    - database
+    - seed
+
+- name: Migrate database
+  sudo: yes
+  sudo_user: diaspora
+  shell: >
+    chdir="{{ diaspora_dir }}"
+    RAILS_ENV=production /usr/bin/bundle exec "rake db:migrate"
+  when: bundle_install|success
+  tags:
+    - update
+    - database
+    - migration
+
+- name: Recompile assets
+  sudo: yes
+  sudo_user: diaspora
+  shell: >
+    chdir="{{ diaspora_dir }}"
+    RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile tmp:cache:clear"
+  tags:
+    - update
+    - assets
