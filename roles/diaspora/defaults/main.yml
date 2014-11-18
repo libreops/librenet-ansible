@@ -8,5 +8,5 @@ unicorn_pid: /var/run/diaspora/diaspora.pid
 sidekiq:
   log: /var/log/diaspora/sidekiq.log
 
-sitename: https://librenet.gr/
+sitename: librenet.gr
 systemd_path: /usr/lib/systemd/system
