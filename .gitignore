@@ -1,2 +1,4 @@
 roles/mariadb/defaults/main.yml
 hosts
+vault-passwd.txt
+*private*
