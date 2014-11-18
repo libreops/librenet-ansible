@@ -366,15 +366,15 @@ configuration: ## Section
   mail: ## Section
 
     ## First you need to enable it.
-    #enable: true
+    enable: true
 
     ## Sender address used in mail sent by Diaspora
-    #sender_address: 'no-reply@librenet.gr'
+    sender_address: 'no-reply@librenet.gr'
 
     ## This selects which mailer should be used. Use 'smtp' for a smtp
     ## connection, 'sendmail' to use the sendmail binary or
     ## 'messagebus' to use the messagebus service.
-    #method: 'sendmail'
+    method: 'sendmail'
 
     ## Ignore if method isn't 'smtp'
     smtp: ## Section
@@ -411,7 +411,7 @@ configuration: ## Section
     sendmail: ## Section
 
       ## The path to the sendmail binary (default='/usr/sbin/sendmail')
-      #location: '/usr/sbin/sendmail'
+      location: '/usr/sbin/sendmail'
 
       ## Use exim and sendmail (default=false)
       #exim_fix: false
