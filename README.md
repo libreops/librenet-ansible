@@ -101,7 +101,7 @@ diaspora
 For example:
 
 ```
-ansible-playbook -i hosts playbooks/restart_services.yml -e "ansible_ssh_port=$SSH_PORT" --tags=diaspora
+ansible-playbook -i hosts playbooks/restart_services.yml --tags=diaspora
 ```
 
 will restart the `unicorn` and `sidekiq` services, as those two tasks have
@@ -112,7 +112,7 @@ the `diaspora` tag.
 Check if there are any software updates:
 
 ```
-ansible-playbook -i hosts playbooks/check_updates.yml -e "ansible_ssh_port=$SSH_PORT"
+ansible-playbook -i hosts playbooks/check_updates.yml
 ```
 
 ### system_update.yml
@@ -120,7 +120,7 @@ ansible-playbook -i hosts playbooks/check_updates.yml -e "ansible_ssh_port=$SSH_
 If you wish to perform a system update you can run:
 
 ```
-ansible-playbook -i hosts playbooks/system_update.yml -e "ansible_ssh_port=$SSH_PORT"
+ansible-playbook -i hosts playbooks/system_update.yml
 ```
 
 You will be prompted whether to continue or not. Possible answers are `yes`
@@ -136,7 +136,7 @@ Currently has the two following playbooks included:
 
 Run with:
 ```
-ansible-playbook -i hosts playbooks/maintenance.yml -e "ansible_ssh_port=$SSH_PORT"
+ansible-playbook -i hosts playbooks/maintenance.yml
 ```
 
 ## Main usage
@@ -151,7 +151,7 @@ More info: <http://docs.ansible.com/playbooks_checkmode.html>
 ### Run all
 
 ```
-ansible-playbook -i hosts site.yml -e 'ansible_ssh_port=$SSH_PORT' --ask-vault-pass
+ansible-playbook -i hosts playbooks/site.yml --vault-password-file vault-passwd.txt
 ```
 
 ### Nginx only changes
@@ -159,7 +159,7 @@ ansible-playbook -i hosts site.yml -e 'ansible_ssh_port=$SSH_PORT' --ask-vault-p
 Configuration files are located in `roles/nginx/templates/`. Once changed, run:
 
 ```
-ansible-playbook -i hosts site.yml --tags=nginx -e 'ansible_ssh_port=$SSH_PORT'
+ansible-playbook -i hosts playbooks/site.yml --tags=nginx
 ```
 
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
