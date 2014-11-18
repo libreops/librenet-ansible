@@ -13,11 +13,35 @@ Distributions supported:
 
 ### Encrypted sensitive data
 
-There is an encrypted file which can be unencrypted with the `--ask-vault-pass`
-command. Read more in [Ansible vault][vault].
+There is an encrypted vars file which can be unencrypted with the
+`vault-passwd.txt` file. Below are two options you'll want to use it.
 
-Needed when no tags are given, or one of the following: `private`, `diaspora`,
-`config`.
+#### Running playbooks
+
+You first need to unencrypt `vault-passwd.txt.gpg` using your gpg key
+(if you are one of librenet.gr's podmins that is) and then use
+`--vault-password-file vault-passwd.txt`. For extra security, after
+successful deployment, you may want to remove the plain text file.
+
+It is needed when no tags at all are given, or one of the following is used:
+`private`, `diaspora`, `config`.
+
+Read more in [Ansible vault][vault] and [How do I store private data in git for Ansible?][private].
+
+#### Add more variables
+
+If you need to add more variables to the encrypted file, you can edit it
+with:
+
+```
+ansible-vault edit roles/diaspora/vars/private.yml
+```
+
+You can't provide the file the password is stored, so manual copy-paste is
+needed. Once done, don't forget to push back any changes.
+
+**Note:** Every time you edit the encrypted file, it appears changed even if
+you don't make any changes.
 
 ### Non standard ssh port
 
@@ -139,3 +163,4 @@ ansible-playbook -i hosts site.yml --tags=nginx -e 'ansible_ssh_port=$SSH_PORT'
 ```
 
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
+[private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
