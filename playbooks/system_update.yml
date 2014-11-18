@@ -1,7 +1,7 @@
 ---
 
 - name: Update system
-  hosts: all
+  hosts: librenet.gr
   sudo: yes
   gather_facts: false
 
