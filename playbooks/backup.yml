@@ -1,0 +1,23 @@
+---
+- hosts: all
+  sudo: yes
+  sudo_user: root
+
+  tasks:
+    - name: Make sure /root/bin exists
+      file: path=/root/bin state=directory
+      register: bin_path
+
+    - name: Copy backup script
+      copy: >
+        src=scripts/backup.sh
+        dest=/root/bin/backup.sh
+        owner=root
+        group=root
+        mode=700
+      when: bin_path|success
+
+    - name: Run backup script
+      shell: >
+        chdir=/root/bin/
+        bash backup.sh
