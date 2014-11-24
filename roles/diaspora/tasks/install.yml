@@ -150,8 +150,6 @@
     - database
     - migration
 
-- debug: var=assets_before_pull.stat.ctime|int
-- debug: var=assets_after_pull.stat.ctime|int
   # Recompile assets only if app/assets exists and any file is changed
 - name: Recompile assets
   sudo: yes
