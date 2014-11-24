@@ -10,6 +10,6 @@ tar zcf /var/backup/diaspora-$_date.tar.gz \
         /var/www/diaspora/public/uploads \
         /var/backup/diaspora-$_date.sql
 
-if [[ -f /var/backup/diaspora-$_date.tar.gz ]]
+if [[ -f /var/backup/diaspora-$_date.tar.gz ]]; then
   rm /var/backup/diaspora-$_date.sql
 fi
