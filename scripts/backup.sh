@@ -4,7 +4,7 @@ set -e
 
 _date=$(date +%F-%s)
 
-mysqldump -uroot -p diaspora_production > /var/backup/diaspora-$_date.sql
+mysqldump -uroot diaspora_production > /var/backup/diaspora-$_date.sql
 
 tar zcf /var/backup/diaspora-$_date.tar.gz \
         /var/www/diaspora/public/uploads \
