@@ -67,7 +67,7 @@ calling a playbook.
 
 Inside the `playbooks/` directory, there are the various playbooks.
 
-### site.yml
+### deploy.yml
 
 The main playbook that is responsible for all the roles.
 Currently we have the following supported tags:
@@ -84,6 +84,7 @@ Currently we have the following supported tags:
 - pkg
 - epel
 - database
+- mycnf
 ```
 
 ### restart_services.yml
@@ -151,7 +152,7 @@ More info: <http://docs.ansible.com/playbooks_checkmode.html>
 ### Run all
 
 ```
-ansible-playbook -i hosts playbooks/site.yml --vault-password-file vault-passwd.txt
+ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt
 ```
 
 ### Nginx only changes
@@ -159,7 +160,7 @@ ansible-playbook -i hosts playbooks/site.yml --vault-password-file vault-passwd.
 Configuration files are located in `roles/nginx/templates/`. Once changed, run:
 
 ```
-ansible-playbook -i hosts playbooks/site.yml --tags=nginx
+ansible-playbook -i hosts deploy.yml --tags=nginx
 ```
 
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
