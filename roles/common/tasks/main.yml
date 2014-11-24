@@ -13,12 +13,6 @@
   sudo: yes
   yum: name={{ item }} state=present
   with_items:
-    - ImageMagick-devel
-    - redis
-    - git
-    - wget
-    - nodejs
-    - ruby
     - tar
     - make
     - gcc

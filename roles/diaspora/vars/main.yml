@@ -1,2 +1,4 @@
 ---
 # vars file for diaspora
+git_repo_url: https://github.com/librenet/librenet.gr.git
+git_branch: librenet
