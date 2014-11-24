@@ -1,6 +1,6 @@
 ---
 # Diaspora systemd services
-- name: systemd|Copy diaspora.target
+- name: Copy diaspora.target
   sudo: yes
   copy:
     src: diaspora.target
@@ -9,13 +9,14 @@
     group: root
     mode: 644
   notify:
+    - daemon reload
     - restart diaspora
   tags:
     - diaspora
     - config
     - systemd
 
-- name: systemd|Copy sidekiq service
+- name: Copy sidekiq systemd service
   sudo: yes
   template:
     src: "{{ item.src }}"
@@ -27,6 +28,7 @@
     - src: diaspora-sidekiq.service.j2
       dest: "{{ systemd_path }}/diaspora-sidekiq.service"
   notify:
+    - daemon reload
     - restart sidekiq
   tags:
     - diaspora
@@ -34,7 +36,7 @@
     - systemd
     - sidekiq
 
-- name: systemd|Copy unicorn service
+- name: Copy unicorn systemd service
   sudo: yes
   template:
     src: "{{ item.src }}"
@@ -46,9 +48,22 @@
     - src: diaspora-unicorn.service.j2
       dest: "{{ systemd_path }}/diaspora-unicorn.service"
   notify:
+    - daemon reload
     - restart unicorn
   tags:
     - diaspora
     - config
     - systemd
     - unicorn
+
+- name: Enable systemd watchdog
+  lineinfile: >
+    dest=/etc/systemd/system.conf
+    regexp="RuntimeWatchdogSec"
+    line="RuntimeWatchdogSec\=20s"
+    state=present
+  notify:
+    - daemon reload
+  tags:
+    - config
+    - systemd

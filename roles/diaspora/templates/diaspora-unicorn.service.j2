@@ -13,6 +13,11 @@ Environment=RAILS_ENV=production
 RuntimeDirectory=diaspora
 RuntimeDirectoryMode=775
 
+# Automatically restart if it hasn't pinged the system manager
+# for longer than 20s.
+WatchdogSec=20s
+Restart=on-failure
+
 CapabilityBoundingSet=
 PrivateTmp=true
 PrivateDevices=true

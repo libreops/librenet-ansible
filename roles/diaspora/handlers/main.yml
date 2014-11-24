@@ -11,3 +11,7 @@
 - name: restart sidekiq
   sudo: yes
   command: systemctl restart diaspora-sidekiq.service
+
+- name: daemon reload
+  sudo: yes
+  command: systemctl daemon-reload
