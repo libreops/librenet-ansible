@@ -163,5 +163,13 @@ Configuration files are located in `roles/nginx/templates/`. Once changed, run:
 ansible-playbook -i hosts deploy.yml --tags=nginx
 ```
 
+### Config only changes
+
+If you changed something in `diaspora.yml` run the playbook with:
+```
+ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt -t config
+```
+
+---
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
 [private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
