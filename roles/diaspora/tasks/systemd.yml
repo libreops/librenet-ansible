@@ -57,6 +57,7 @@
     - unicorn
 
 - name: Enable systemd watchdog
+  sudo: yes
   lineinfile: >
     dest=/etc/systemd/system.conf
     regexp="RuntimeWatchdogSec"
