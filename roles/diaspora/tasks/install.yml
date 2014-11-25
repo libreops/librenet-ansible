@@ -54,6 +54,7 @@
     repo="{{ git_repo_url }}"
     version="{{ git_branch }}"
     dest="{{ diaspora_dir }}"
+    remote=librenet
   tags:
     - git
     - diaspora
