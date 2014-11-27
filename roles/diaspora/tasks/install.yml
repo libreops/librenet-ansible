@@ -40,6 +40,15 @@
   user: name=diaspora comment="Diaspora" shell=/bin/bash
   register: add_user
 
+- name: Create repo directory
+  sudo: yes
+  file: >
+    path=/var/www/diaspora
+    state=directory
+    owner=diaspora
+    group=diaspora
+    mode=755
+
 - name: Register app/assets before pull
   stat: path={{ diaspora_dir }}/app/assets
   register: assets_before_pull
