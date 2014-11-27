@@ -49,13 +49,6 @@
     group=diaspora
     mode=755
 
-- name: Register app/assets before pull
-  stat: path={{ diaspora_dir }}/app/assets
-  register: assets_before_pull
-  tags:
-    - update
-    - assets
-
 - name: Git checkout librenet branch
   sudo: yes
   sudo_user: diaspora
@@ -68,14 +61,8 @@
     - git
     - diaspora
     - deploy
-  when: add_user|success
-
-- name: Register app/assets after pull
-  stat: path={{ diaspora_dir }}/app/assets
-  register: assets_after_pull
-  tags:
-    - update
     - assets
+  when: add_user|success
 
 - name: Install gem dependencies
   sudo: yes
@@ -167,7 +154,8 @@
   shell: >
     chdir="{{ diaspora_dir }}"
     RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile tmp:cache:clear"
-  when: "'assets_before_pull.stat.ctime|int' != 'asset_after_pull.stat.ctime|int'"
+  notify:
+    - restart unicorn
   tags:
     - update
     - assets
