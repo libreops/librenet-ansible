@@ -170,6 +170,15 @@ If you changed something in `diaspora.yml` run the playbook with:
 ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt -t config
 ```
 
+### Assets only changes
+
+If you change/add anything under `app/assets`, run the playbook with:
+```
+ansible-playbook -i hosts deploy.yml -t assets
+```
+
+It will fetch the new code and run the rake task to precompile the assets.
+
 ---
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
 [private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
