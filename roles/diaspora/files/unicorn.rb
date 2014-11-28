@@ -1,3 +1,4 @@
+## Ansible managed, any manual changes will be lost.
 require File.expand_path('../load_config', __FILE__)
 
 # Enable and set these to run the worker as a different user/group
