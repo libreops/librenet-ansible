@@ -1,7 +1,6 @@
 ---
 # Diaspora systemd services
 - name: Copy diaspora.target
-  sudo: yes
   copy:
     src: diaspora.target
     dest: "{{ systemd_path }}/diaspora.target"
@@ -17,7 +16,6 @@
     - systemd
 
 - name: Copy sidekiq systemd service
-  sudo: yes
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -37,7 +35,6 @@
     - sidekiq
 
 - name: Copy unicorn systemd service
-  sudo: yes
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -57,7 +54,6 @@
     - unicorn
 
 - name: Enable systemd watchdog
-  sudo: yes
   lineinfile: >
     dest=/etc/systemd/system.conf
     regexp="RuntimeWatchdogSec"

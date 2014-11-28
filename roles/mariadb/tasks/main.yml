@@ -1,7 +1,6 @@
 ---
 # tasks file for mariadb
 - name: Install MariaDB
-  sudo: yes
   yum: name={{ item }} state=present
   with_items:
     - mariadb
@@ -12,7 +11,6 @@
     - database
 
 - name: Ensure MariaDB is started and enabled on boot
-  sudo: yes
   shell: systemctl start mariadb && systemctl enable mariadb
   tags:
     - database

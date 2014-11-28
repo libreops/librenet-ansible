@@ -7,7 +7,6 @@
     - private
 
 - name: Install diaspora system dependencies
-  sudo: yes
   yum: name="{{ item }}" state=present
   with_items:
     - git
@@ -24,7 +23,6 @@
     - diaspora
 
 - name: Install bundler
-  sudo: yes
   gem: name=bundler state=present user_install=no
   register: bundler
   tags:
@@ -32,16 +30,13 @@
     - bundler
 
 - name: Create bundle symlink to /usr/bin
-  sudo: yes
   file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
 
 - name: Add diaspora user
-  sudo: yes
   user: name=diaspora comment="Diaspora" shell=/bin/bash
   register: add_user
 
 - name: Create repo directory
-  sudo: yes
   file: >
     path=/var/www/diaspora
     state=directory
@@ -50,7 +45,6 @@
     mode=755
 
 - name: Git checkout librenet branch
-  sudo: yes
   sudo_user: diaspora
   git: >
     repo="{{ git_repo_url }}"
@@ -65,7 +59,6 @@
   when: add_user|success
 
 - name: Install gem dependencies
-  sudo: yes
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
@@ -79,7 +72,6 @@
     - update
 
 - name: Copy diaspora.yml
-  sudo: yes
   template: >
     src=diaspora.yml.j2
     dest="{{ diaspora_dir }}/config/diaspora.yml"
@@ -98,7 +90,6 @@
     - sidekiq
 
 - name: Copy database.yml
-  sudo: yes
   template: >
     src=database.yml.j2
     dest="{{ diaspora_dir }}/config/database.yml"
@@ -116,7 +107,6 @@
     - yaml
 
 - name: Check if database is already populated
-  sudo: yes
   command: test -f "/var/lib/mysql/{{ mysql_databases[0].name }}/aspects.frm"
   ignore_errors: true
   changed_when: false
@@ -125,7 +115,6 @@
     -database
 
 - name: Initial Seed of database (destructive, run only 1st time)
-  sudo: yes
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
@@ -136,7 +125,6 @@
     - seed
 
 - name: Migrate database
-  sudo: yes
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
@@ -149,7 +137,6 @@
 
   # Recompile assets only if app/assets exists and any file is changed
 - name: Recompile assets
-  sudo: yes
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"

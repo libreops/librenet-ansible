@@ -1,6 +1,5 @@
 ---
 - name: Check if .my.cnf file already exists.
-  sudo: yes
   stat: path={{ mysql_user_home }}/.my.cnf
   register: mycnf_file
 
@@ -19,7 +18,6 @@
 
 # Has to be after the root password assignment, for idempotency.
 - name: Copy .my.cnf file with root password credentials.
-  sudo: yes
   template:
     src: dot_my.cnf.j2
     dest: "{{ mysql_user_home }}/.my.cnf"
@@ -30,9 +28,7 @@
     - mycnf
 
 - name: Remove anonymous MySQL user.
-  sudo: yes
   mysql_user: "name='' state=absent"
 
 - name: Remove MySQL test database.
-  sudo: yes
   mysql_db: "name='test' state=absent"

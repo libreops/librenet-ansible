@@ -2,7 +2,6 @@
 # tasks file for common
 
 - name: Install EPEL repo
-  sudo: yes
   yum: name=epel-release state=latest
   tags:
     - yum
@@ -10,7 +9,6 @@
     - epel
 
 - name: Install system dependencies
-  sudo: yes
   yum: name={{ item }} state=present
   with_items:
     - tar

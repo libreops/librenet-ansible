@@ -1,6 +1,5 @@
 ---
 - name: Ensure MySQL users are present.
-  sudo: yes
   mysql_user:
     name: "{{ item.name }}"
     host: "{{ item.host | default('localhost') }}"
