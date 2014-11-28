@@ -28,3 +28,13 @@
   notify: restart nginx
   tags:
     - nginx
+
+# TODO Currently the stdout is always empty. No way to know if there
+# are access logs or not.
+- name: Remove nginx access logs if any
+  sudo: yes
+  shell: find /var/log/nginx/ -name "*access*" -print0 | xargs --no-run-if-empty -0 rm
+  register: rm_result
+  changed_when: 'rm_result.stdout != ""'
+  tags:
+    - nginx
