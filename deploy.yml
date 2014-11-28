@@ -1,5 +1,5 @@
 ---
-- hosts: librenet.gr
+- hosts: all
 
   roles:
     - common
