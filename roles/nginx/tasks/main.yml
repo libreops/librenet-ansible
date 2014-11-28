@@ -27,6 +27,26 @@
   tags:
     - nginx
 
+- name: Copy ssl cerificates
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 644
+  with_items:
+    - {
+      src: "../files/ssl/ssl-unified.crt",
+      dest: "{{ ssl_cert }}"
+      }
+    - {
+      src: "../files/ssl/ssl.key",
+      dest: "{{ ssl_cert_key }}"
+      }
+  notify: restart nginx
+  tags:
+    - nginx
+
 # TODO Currently the stdout is always empty. No way to know if there
 # are access logs or not.
 - name: Remove nginx access logs if any
