@@ -27,6 +27,27 @@
   tags:
     - nginx
 
+- name: Create ssl directory
+  file:
+    path: /etc/ssl/librenet.gr/
+    state: directory
+    owner: root
+    group: root
+    mode: 755
+
+- name: Check if hdparam.pem exists
+  command: test -f /etc/ssl/dhparam.pem
+  register: dhparam_pem
+  failed_when: false
+  tags:
+    - ssl
+
+- name: Create dhparam.pem if not exists
+  command: openssl dhparam -out /etc/ssl/dhparam.pem 2048
+  when: dhparam_pem|failed
+  tags:
+    - ssl
+
 - name: Copy ssl cerificates
   copy:
     src: "{{ item.src }}"
