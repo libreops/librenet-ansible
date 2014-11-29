@@ -7,6 +7,9 @@
   tags:
     - nginx
 
+- name: Enable nginx service
+  service: name=nginx state=started enabled=yes
+
 - name: Copy configuration files
   template:
     src: "{{ item.src }}"

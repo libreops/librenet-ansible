@@ -11,7 +11,7 @@
     - database
 
 - name: Ensure MariaDB is started and enabled on boot
-  shell: systemctl start mariadb && systemctl enable mariadb
+  service: name=mariadb state=started enabled=yes
   tags:
     - database
 

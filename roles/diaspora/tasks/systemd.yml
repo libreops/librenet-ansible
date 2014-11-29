@@ -63,6 +63,12 @@
     - systemd
     - unicorn
 
+- name: Enable unicorn/sidekiq services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - diaspora-unicorn
+    - diaspora-sidekiq
+
 - name: Enable systemd watchdog
   lineinfile: >
     dest=/etc/systemd/system.conf
