@@ -34,6 +34,16 @@
     - systemd
     - sidekiq
 
+- name: Copy diaspora tmpfiles to persist directories
+  template:
+    src: diaspora.tmpfiles.d
+    dest: /usr/lib/tmpfiles.d/diaspora.conf
+    owner: root
+    group: root
+    mode: 644
+  tags:
+    - unicorn
+
 - name: Create unicorn pid directory
   file:
     path: /var/run/diaspora/
