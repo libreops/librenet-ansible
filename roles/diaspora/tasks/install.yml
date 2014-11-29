@@ -31,6 +31,8 @@
 
 - name: Create bundle symlink to /usr/bin
   file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
+  tags:
+    - bundler
 
 - name: Add diaspora user
   user: name=diaspora comment="Diaspora" shell=/bin/bash
@@ -44,6 +46,20 @@
     group=diaspora
     mode=755
 
+- name: Ensure /home/diaspora/.ssh/ exists
+  sudo_user: diaspora
+  file: path=/home/diaspora/.ssh/ state=directory
+  tags:
+    - ssh
+
+- name: Add github to known_hosts
+  sudo_user: diaspora
+  shell: "ssh-keyscan -H github.com > /home/diaspora/.ssh/known_hosts"
+  register: github_known_hosts
+  tags:
+    - git
+    - ssh
+
 - name: Git checkout librenet branch
   sudo_user: diaspora
   git: >
@@ -51,12 +67,12 @@
     version="{{ git_branch }}"
     dest="{{ diaspora_dir }}"
     remote=librenet
+  when: add_user|success and github_known_hosts|success
   tags:
     - git
     - diaspora
     - deploy
     - assets
-  when: add_user|success
 
 - name: Install gem dependencies
   sudo_user: diaspora
