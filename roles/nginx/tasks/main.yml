@@ -34,6 +34,8 @@
     owner: root
     group: root
     mode: 755
+  tags:
+    - ssl
 
 - name: Check if hdparam.pem exists
   command: test -f /etc/ssl/dhparam.pem
