@@ -11,6 +11,7 @@
 - name: Install system dependencies
   yum: name={{ item }} state=present
   with_items:
+    - vim
     - tar
     - make
     - gcc
