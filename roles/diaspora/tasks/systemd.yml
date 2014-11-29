@@ -34,6 +34,16 @@
     - systemd
     - sidekiq
 
+- name: Create unicorn pid directory
+  file:
+    path: /var/run/diaspora/
+    state: directory
+    owner: diaspora
+    group: diaspora
+    mode: 755
+  tags:
+    - unicorn
+
 - name: Copy unicorn systemd service
   template:
     src: "{{ item.src }}"
