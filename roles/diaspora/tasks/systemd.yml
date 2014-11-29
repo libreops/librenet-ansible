@@ -1,20 +1,5 @@
 ---
 # Diaspora systemd services
-- name: Copy diaspora.target
-  copy:
-    src: diaspora.target
-    dest: "{{ systemd_path }}/diaspora.target"
-    owner: root
-    group: root
-    mode: 644
-  notify:
-    - daemon reload
-    - restart diaspora
-  tags:
-    - diaspora
-    - config
-    - systemd
-
 - name: Copy sidekiq systemd service
   template:
     src: "{{ item.src }}"
@@ -88,5 +73,20 @@
   notify:
     - daemon reload
   tags:
+    - config
+    - systemd
+
+- name: Copy diaspora.target
+  copy:
+    src: diaspora.target
+    dest: "{{ systemd_path }}/diaspora.target"
+    owner: root
+    group: root
+    mode: 644
+  notify:
+    - daemon reload
+    - restart diaspora
+  tags:
+    - diaspora
     - config
     - systemd
