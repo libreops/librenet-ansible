@@ -1,4 +1,4 @@
 ---
 # handlers file for nginx
 - name: restart nginx
-  command: systemctl restart nginx
+  service: name=nginx state=restarted
