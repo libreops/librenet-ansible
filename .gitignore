@@ -5,3 +5,4 @@ vault-passwd.txt
 *crt
 *key
 downloads/
+*.swp
