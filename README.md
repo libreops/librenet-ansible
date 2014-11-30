@@ -1,7 +1,7 @@
 # Configuration Management of librenet.gr
 
-This repo contains various Ansible scripts that help with maintenance of the
-<https://librenet.gr> Diaspora pod.
+This repo contains various Ansible scripts that help with maintenance of
+the <https://librenet.gr> Diaspora pod.
 
 We try to be as abstract as possible, but this mainly targets our own
 infrastructure.
@@ -9,8 +9,12 @@ infrastructure.
 Distributions supported:
 - CentOS 7
 
-It is always a good idea to check before you deploy. Just add the `--check` flag
-when running a playbook. You can also add `--diff` to see the changed diff.
+For testing purposes, a Vagrantfile is provided which emulates the
+deployment on a VM. Check the `vagrant/` directory.
+
+It is always a good idea to check before you deploy. Just add the
+`--check` flag when running a playbook. You can also add `--diff` to see
+the changed diff.
 
 More info: <http://docs.ansible.com/playbooks_checkmode.html>
 
@@ -28,8 +32,8 @@ You first need to unencrypt `vault-passwd.txt.gpg` using your gpg key
 `--vault-password-file vault-passwd.txt`. For extra security, after
 successful deployment, you may want to remove the plain text file.
 
-It is needed when no tags at all are given, or one of the following is used:
-`private`, `diaspora`, `config`.
+It is needed when no tags at all are given, or one of the following is
+used: `private`, `diaspora`, `config`.
 
 Read more in [Ansible vault][vault] and [How do I store private data in git for Ansible?][private].
 
@@ -91,8 +95,6 @@ playbook                | description
 The main playbook that is responsible for all the roles.
 
 It deploys a diaspora pod with mariadb/mysql on a CentOS7 server.
-For testing purposes, a Vagrantfile is provided which emulates the deployment
-on a VM.
 
 Run with:
 ```
