@@ -9,6 +9,11 @@ infrastructure.
 Distributions supported:
 - CentOS 7
 
+It is always a good idea to check before you deploy. Just add the `--check` flag
+when running a playbook. You can also add `--diff` to see the changed diff.
+
+More info: <http://docs.ansible.com/playbooks_checkmode.html>
+
 ## Conventions
 
 ### Encrypted sensitive data
@@ -55,22 +60,46 @@ The hosts file is excluded from git so that you don't give away the port.
 
 ### Deploy user
 
-The tasks are written in a way where sudo is invoked when needed. When running
-a playbook, you must ensure that your remote user has sudo privileges to run any
+The tasks are written in a way where sudo is always invoked. When running a
+playbook, you must ensure that your remote user has sudo privileges to run any
 command.
 
-If it is a passwordless user, you don't need to pass any flags. If the remote user
-requires a password to run the sudo commands, add `--ask-sudo-pass` when
+If it is a passwordless user, you don't need to pass any flags. If the remote
+user requires a password to run the sudo commands, add `--ask-sudo-pass` when
 calling a playbook.
 
 ## Playbooks
 
-Inside the `playbooks/` directory, there are the various playbooks.
+Inside the `playbooks/` directory, there are various playbooks for everyday
+amdinistrative usage.
+
+The table below summarizes their purposes.
+
+playbook                | description
+----------------------- | -----------
+`deploy.yml`            | the main playbook which deploys diaspora with its various components
+`backup.yml`            | backups diaspora mysql database and the `uploads/` dir by running the backup script
+`check_updates.yml`     | checks for system updates without updating
+`fetch_logs.yml`        | fetches logs for inspection
+`maintenance.yml`       | calls `check_updates.yml`, `system_update.yml` and `services_restart.yml` in that order
+`services_restart.yml`  | restarts various services
+`services_status.yml`   | checks status of various services
+`system_update.yml`     | updates system by running `yum update`
 
 ### deploy.yml
 
 The main playbook that is responsible for all the roles.
-Currently we have the following supported tags:
+
+It deploys a diaspora pod with mariadb/mysql on a CentOS7 server.
+For testing purposes, a Vagrantfile is provided which emulates the deployment
+on a VM.
+
+Run with:
+```
+ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt
+```
+
+Supported tags:
 ```
 - diaspora
 - config
@@ -87,62 +116,21 @@ Currently we have the following supported tags:
 - mycnf
 ```
 
-### restart_services.yml
-
-Restart main services. Supported tags are:
-
-```
-unicorn
-sidekiq
-ssh
-mariadb
-diaspora
-```
-
-For example:
-
-```
-ansible-playbook -i hosts playbooks/restart_services.yml --tags=diaspora
-```
-
-will restart the `unicorn` and `sidekiq` services, as those two tasks have
-the `diaspora` tag.
-
 ### check_updates.yml
 
-Check if there are any software updates:
+Check if there are any software updates. It does not update the system. After
+running this playbook you might want to run `system_update.yml` to fully
+update your system.
+
+Run with:
 
 ```
 ansible-playbook -i hosts playbooks/check_updates.yml
 ```
 
-### system_update.yml
-
-If you wish to perform a system update you can run:
-
-```
-ansible-playbook -i hosts playbooks/system_update.yml
-```
-
-You will be prompted whether to continue or not. Possible answers are `yes`
-and `no`, with `no` being the default. To be sure, first run the
-`check_updates.yml` to see what updates are available.
-
-### maintenance.yml
-
-Currently has the two following playbooks included:
-
-* `system_update.yml`
-* `restart_services.yml`
-
-Run with:
-```
-ansible-playbook -i hosts playbooks/maintenance.yml
-```
-
 ### fetch_logs.yml
 
-It fetches logs for inspection. Currently sidekiq and unicorn ones.
+It fetches logs for inspection. Currently included: sidekiq, unicorn.
 If you want to add more logs to fetch, edit `playbooks/fetch_logs.yml` and
 add another entry below the `with_items` option.
 
@@ -157,17 +145,81 @@ Run with:
 ansible-playbook -i hosts playbooks/fetch_logs.yml
 ```
 
-## Main usage
+### services_restart.yml
 
-### Dry run (check)
+Restart main services.
 
-It is always a good idea to check before you deploy. Just add the `--check` flag
-when running a playbook. You can also add `--diff` to see the changed diff.
+Supported tags:
+```
+unicorn
+sidekiq
+mariadb
+diaspora
+ssh
+```
 
-More info: <http://docs.ansible.com/playbooks_checkmode.html>
+For example:
+
+```
+ansible-playbook -i hosts playbooks/restart_services.yml --tags=diaspora
+```
+
+will restart the `unicorn` and `sidekiq` services, as those two tasks have
+the `diaspora` tag.
+
+### services_status.yml
+
+Check the status of various services.
+
+Supported services: `unicorn`, `sidekiq`, `mariadb`, `redis`.
+
+Supported tags:
+```
+- diaspora
+- unicorn
+- sidekiq
+- redis
+- mariadb
+- mysql
+```
+
+Run with:
+```
+ansible-playbook -i hosts playbooks/services_status.yml
+```
+
+### system_update.yml
+
+Perform a system update.
+
+Run with:
+
+```
+ansible-playbook -i hosts playbooks/system_update.yml
+```
+
+You will be prompted whether to continue or not. Possible answers are `yes`
+and `no`, with `no` being the default. To be sure, first run the
+`check_updates.yml` to see what updates are available.
+
+### maintenance.yml
+
+Currently has the following playbooks included:
+
+* `check_updates.yml`
+* `system_update.yml`
+* `services_restart.yml`
+
+Run with:
+```
+ansible-playbook -i hosts playbooks/maintenance.yml
+```
+
+## Specific runs
 
 ### Run all
 
+Run all roles:
 ```
 ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt
 ```
