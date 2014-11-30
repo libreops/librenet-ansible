@@ -71,7 +71,7 @@ calling a playbook.
 ## Playbooks
 
 Inside the `playbooks/` directory, there are various playbooks for everyday
-amdinistrative usage.
+administrative usage.
 
 The table below summarizes their purposes.
 
