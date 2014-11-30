@@ -140,6 +140,23 @@ Run with:
 ansible-playbook -i hosts playbooks/maintenance.yml
 ```
 
+### fetch_logs.yml
+
+It fetches logs for inspection. Currently sidekiq and unicorn ones.
+If you want to add more logs to fetch, edit `playbooks/fetch_logs.yml` and
+add another entry below the `with_items` option.
+
+By default, logs are stored in a `downloads/` dir at the root of this repo
+which is in `.gitignore`.
+
+Source and destination are defined by variables. If you want to store in a
+different location you have to edit them.
+
+Run with:
+```
+ansible-playbook -i hosts playbooks/fetch_logs.yml
+```
+
 ## Main usage
 
 ### Dry run (check)

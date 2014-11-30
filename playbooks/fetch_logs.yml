@@ -1,0 +1,22 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+    diaspora_path: "/var/www/diaspora/log"
+    downloads_path: "../downloads/{{ ansible_hostname }}/"
+
+  tasks:
+
+    - name: Fetch logs for inspection
+      fetch: >
+        src={{ item.src }}
+        dest={{ item.dest }}
+        flat=yes
+        fail_on_missing=yes
+        validate_checksum=no
+      with_items:
+        - src: "{{ diaspora_path }}/sidekiq.log"
+          dest: "{{ downloads_path }}"
+        - src: "{{ diaspora_path }}/production.log"
+          dest: "{{ downloads_path }}"
+
