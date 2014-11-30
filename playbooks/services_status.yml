@@ -1,0 +1,44 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: status unicorn
+      command: systemctl status diaspora-unicorn.service
+      register: unicorn_status
+      failed_when:  unicorn_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - unicorn
+        - diaspora
+
+    - name: status sidekiq
+      command: systemctl status diaspora-sidekiq.service
+      register: sidekiq_status
+      failed_when:  sidekiq_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - sidekiq
+        - diaspora
+
+    - name: status redis
+      command: systemctl status redis.service
+      register: redis_status
+      failed_when:  redis_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - redis
+        - diaspora
+
+    - name: status mariadb
+      command: systemctl status mariadb.service
+      register: mariadb_status
+      failed_when:  mariadb_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - mariadb
+        - mysql
