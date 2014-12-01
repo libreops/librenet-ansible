@@ -1,9 +1,9 @@
-For testing purposes, a Vagrantfile is provided, so that a staging
-environment can be set up.
+For testing purposes, a Vagrantfile is provided, so that a staging environment
+can be set up.
 
 ## Requirements
 
-You must have installed the below software in your local machine:
+You must have installed the following software in your local machine:
 
 - [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -12,7 +12,7 @@ You must have installed the below software in your local machine:
 ## Run
 
 **Note:** Before running vagrant you might want to change some of its
-configuration. See below for available settings.
+configuration. See [configuration](#configuration) for available settings.
 
 ```
 # Clone this repo
@@ -21,7 +21,7 @@ git clone https://github.com/librenet/ansible diaspora_ansible
 # Change to vagrant directory
 cd diaspora_ansible/vagrant/
 
-# Edit Vagrantfile to much your setup and start vagrant
+# Edit Vagrantfile to match your setup and start vagrant
 vagrant up
 ```
 
@@ -40,29 +40,22 @@ See [useful links](#useful-links) for more vagrant commands.
 Current Vagrantfile assumes certain things. You might want to change them
 to match your own setup.
 
-### `ansible.playbook = "../deploy.yml"`
+`ansible.playbook` (string): path to the playbook to run (relative/absolute).
 
-Relative path to the playbook to run.
+`ansible.inventory_path` (string): path to the inventory file (relative/absolute).
 
-### `ansible.inventory_path = "../hosts"`
+`ansible.limit` (string): limit playbook to run only on a particular host.
+This is defined in the hosts file. Use in conjuction with the IP that is set up
+in Vagrantfile.
 
-Relative path to the inventory file.
-
-### `ansible.limit = "diaspora_staging"`
-
-Limit playbook to run only on a particular host. This is defined in the
-hosts file. Use in conjuction with the ip that is set up in Vagrantfile.
-
-For example, hosts file should include:
+For example, `hosts` file should include:
 ```
 diaspora_staging ansible_ssh_host=192.168.33.10
 ```
 
-### `ansible.vault_password_file = "../../vault-passwd.txt"`
+`ansible.vault_password_file` (string): path to the `vault-passwd.txt` (relative/absolute).
 
-Relative path to the `vault-passwd.txt`.
-
-### `ansible.extra_vars = { sitename: "staging.librenet.local" }`
+`ansible.extra_vars = { sitename: "staging.librenet.local" }` (dictionary):
 
 Diaspora sets the FQDN in the database via `diaspora.yml`. Setting this
 extra variable in Vagratfile, you can bypass the one set in
@@ -73,6 +66,8 @@ can set in your `/etc/hosts`:
 ```
 192.168.33.10 staging.librenet.local
 ```
+
+Point your web browser to `staging.librenet.local` and test your deployment.
 
 ## Useful links
 
