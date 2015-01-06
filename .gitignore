@@ -6,4 +6,4 @@ vault-passwd.txt
 *key
 downloads/
 *.swp
-vagrant/.vagrant/
+.vagrant/
