@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars:
+    latest_backup_path: "/var/backup/latest"
+    downloads_path: "../downloads/{{ ansible_hostname }}/"
+
+  tasks:
+    - name: Download latest backup
+      synchronize: >
+        mode=pull
+        src={{ latest_backup_path }}
+        dest={{ downloads_path }}

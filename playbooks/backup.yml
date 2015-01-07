@@ -4,8 +4,11 @@
   sudo_user: root
 
   tasks:
-    - name: Make sure /root/bin exists
-      file: path=/root/bin state=directory
+    - name: Make sure needed directories exist
+      file: path={{ item }} state=directory recurse=yes
+      with_items:
+        - /root/bin
+        - /var/backup/latest
       register: bin_path
 
     - name: Copy backup script
