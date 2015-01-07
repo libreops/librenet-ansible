@@ -23,10 +23,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Ansible provisioner.
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "../deploy.yml"
-    ansible.inventory_path = "../hosts"
+    ansible.playbook = "deploy.yml"
+    ansible.inventory_path = "hosts"
     ansible.limit = "diaspora_staging"
-    ansible.vault_password_file = "../../vault-passwd.txt"
+    ansible.vault_password_file = "../vault-passwd.txt"
     ansible.extra_vars = {
       sitename: "staging.librenet.local"
     }
