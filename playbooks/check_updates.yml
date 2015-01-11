@@ -1,6 +1,6 @@
 ---
 - name: Check for updates, do not install
-  hosts: librenet.gr
+  hosts: all
   gather_facts: false
   sudo: yes
 
