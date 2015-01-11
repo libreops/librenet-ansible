@@ -7,7 +7,7 @@
 
   vars_prompt:
     - name: "system_update"
-      prompt: "Do you with to perform a system update? (yes/no)"
+      prompt: "Do you wish to perform a system update? (yes/no)"
       private: no
       default: "no"
 
