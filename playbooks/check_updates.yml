@@ -7,5 +7,6 @@
   tasks:
     - command: /usr/bin/yum check-update
       register: update
+      ignore_errors: yes
     - debug: var=update.stdout_lines
 
