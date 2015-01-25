@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  gather_facts: false
   vars:
     latest_backup_path: "/var/backup/latest"
     downloads_path: "../downloads/{{ ansible_hostname }}/"
