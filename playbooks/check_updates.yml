@@ -8,5 +8,6 @@
     - command: /usr/bin/yum check-update
       register: update
       ignore_errors: yes
+      changed_when: false
     - debug: var=update.stdout_lines
 
