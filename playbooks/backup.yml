@@ -1,6 +1,7 @@
 ---
 - hosts: all
   sudo: yes
+  gather_facts: false
   sudo_user: root
 
   tasks:

@@ -1,6 +1,7 @@
 ---
 - hosts: all
   sudo: yes
+  gather_facts: false
   vars:
     diaspora_path: "/var/www/diaspora/log"
     downloads_path: "../downloads/{{ ansible_hostname }}/"
