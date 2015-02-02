@@ -1,5 +1,13 @@
 ---
 # tasks file for diaspora
+- include_vars: ../../mariadb/defaults/main.yml
+- include_vars: private.yml
+  tags:
+    - diaspora
+    - config
+    - private
+    - unicorn
+
 - include: install.yml tags=install
 - include: systemd.yml
 
