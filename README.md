@@ -1,3 +1,36 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Configuration Management of librenet.gr](#configuration-management-of-librenetgr)
+  - [Conventions](#conventions)
+    - [Encrypted sensitive data](#encrypted-sensitive-data)
+      - [Running playbooks](#running-playbooks)
+      - [Add more variables](#add-more-variables)
+    - [Non standard ssh port](#non-standard-ssh-port)
+    - [Deploy user](#deploy-user)
+  - [Playbooks](#playbooks)
+    - [deploy.yml](#deployyml)
+    - [check_updates.yml](#check_updatesyml)
+    - [fetch_logs.yml](#fetch_logsyml)
+    - [services_restart.yml](#services_restartyml)
+    - [services_status.yml](#services_statusyml)
+    - [system_update.yml](#system_updateyml)
+    - [maintenance.yml](#maintenanceyml)
+  - [Specific runs](#specific-runs)
+    - [Run all](#run-all)
+    - [Nginx only changes](#nginx-only-changes)
+    - [Config only changes](#config-only-changes)
+    - [Assets only changes](#assets-only-changes)
+- [Vagrant](#vagrant)
+  - [Requirements](#requirements)
+  - [Run](#run)
+  - [Configuration](#configuration)
+  - [Useful links](#useful-links)
+  - [](#)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ![Build Status](https://travis-ci.org/librenet/ansible.svg?branch=master)
 
 # Configuration Management of librenet.gr
