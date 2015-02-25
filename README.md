@@ -27,7 +27,6 @@
   - [Run](#run)
   - [Configuration](#configuration)
   - [Useful links](#useful-links)
-  - [](#)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -365,6 +364,5 @@ Some useful vagrant links:
 - <https://docs.vagrantup.com/v2/provisioning/ansible.html>
 - <https://docs.vagrantup.com/v2/cli/index.html>
 
----
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
 [private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
