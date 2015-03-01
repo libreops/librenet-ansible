@@ -1,0 +1,17 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: false
+  vars:
+    diaspora_path: "/var/www/diaspora/log"
+
+  tasks:
+
+    - name: Purge logs
+      file: >
+        path={{ item.src }}
+        state=absent
+      with_items:
+        - src: "{{ diaspora_path }}/sidekiq.log"
+        - src: "{{ diaspora_path }}/production.log"
+
