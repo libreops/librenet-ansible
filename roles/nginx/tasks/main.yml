@@ -12,14 +12,14 @@
 
 - name: Remove default configuration file
   file:
-    path: "/etc/nginx/nginx.conf.default"
+    path: etc/nginx/nginx.conf.default
     state: absent
   notify:
     - restart nginx
 
 - name: Make sure conf.d/ exists
   file:
-    path: "/etc/nginx/conf.d/"
+    path: /etc/nginx/conf.d/
     state: directory
     owner: root
     group: root
