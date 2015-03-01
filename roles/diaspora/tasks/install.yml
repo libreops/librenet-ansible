@@ -28,7 +28,12 @@
     - bundler
 
 - name: Add diaspora user
-  user: name=diaspora comment="Diaspora" shell=/bin/bash
+  user:
+    name: diaspora
+    comment: "Diaspora"
+    shell: /bin/bash
+    home: /home/diaspora
+    move_home: yes
   register: add_user
 
 - name: Create repo directory
@@ -38,22 +43,6 @@
     owner=diaspora
     group=diaspora
     mode=755
-
-- name: Ensure /home/diaspora/.ssh/ exists
-  sudo_user: diaspora
-  file: path=/home/diaspora/.ssh/ state=directory
-  tags:
-    - ssh
-
-- name: Add github to known_hosts
-  sudo_user: diaspora
-  shell: >
-    creates=/home/diaspora/.ssh/known_hosts
-    ssh -keyscan -H github.com > /home/diaspora/.ssh/known_hosts
-  register: github_known_hosts
-  tags:
-    - git
-    - ssh
 
 - name: Get last remote commit sha
   shell: >
@@ -67,15 +56,17 @@
     git rev-parse HEAD
   register: local_sha
   changed_when: false
+  ignore_errors: yes
 
 - name: Git checkout librenet branch
   sudo_user: diaspora
-  git: >
-    repo="{{ git_repo_url }}"
-    version="{{ git_branch }}"
-    dest="{{ diaspora_dir }}"
-    remote=librenet
-  when: add_user|success and github_known_hosts|success and (remote_sha.stdout != local_sha.stdout)
+  git:
+    repo: "{{ git_repo_url }}"
+    version: "{{ git_branch }}"
+    dest: "{{ diaspora_dir }}"
+    remote: librenet
+    accept_hostkey: yes
+  when: add_user|success and (remote_sha.stdout != local_sha.stdout)
   register: git_checkout
   tags:
     - git
@@ -86,19 +77,6 @@
 - name: stat Gemfile.lock
   stat: path=/var/www/diaspora/diaspora/Gemfile.lock
   register: gemfile_lock
-
-- name: Install gem dependencies
-  sudo_user: diaspora
-  shell: >
-    chdir="{{ diaspora_dir }}"
-    creates="{{ diaspora_dir }}"/vendor/bundle/
-    RAILS_ENV=production /usr/bin/bundle install --without test development --deployment
-  register: bundle_install
-  when: bundler|success and gemfile_lock.changed == true
-  tags:
-    - gem
-    - bundler
-    - update
 
 - name: Copy unicorn.rb
   copy: >
@@ -150,6 +128,19 @@
     - database
     - yaml
 
+- name: Install gem dependencies
+  sudo_user: diaspora
+  shell: >
+    chdir="{{ diaspora_dir }}"
+    creates="{{ diaspora_dir }}"/vendor/bundle/
+    RAILS_ENV=production /usr/bin/bundle install --without test development --deployment
+  register: bundle_install
+  when: bundler|success
+  tags:
+    - gem
+    - bundler
+    - update
+
 - name: Check if database is already populated
   command: test -f "/var/lib/mysql/{{ mysql_databases[0].name }}/aspects.frm"
   ignore_errors: true
@@ -183,15 +174,13 @@
     - database
     - migration
 
-- debug: var=git_checkout
-
   # Recompile assets only if any file has changed
 - name: Recompile assets
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
     RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile tmp:cache:clear"
-  when: bundle_install|success and git_checkout.changed == true
+  when: bundle_install|success
   notify:
     - restart unicorn
   tags:

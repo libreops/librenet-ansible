@@ -1,7 +1,0 @@
-## Ansible managed, any manual changes will be lost.
-[Unit]
-Description=Diaspora web application
-Wants=diaspora-unicorn.service diaspora-sidekiq.service
-
-[Install]
-WantedBy=multi-user.target
