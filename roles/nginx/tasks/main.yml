@@ -10,6 +10,21 @@
 - name: Enable nginx service
   service: name=nginx state=started enabled=yes
 
+- name: Remove default configuration file
+  file:
+    path: "/etc/nginx/nginx.conf.default"
+    state: absent
+  notify:
+    - restart nginx
+
+- name: Make sure conf.d/ exists
+  file:
+    path: "/etc/nginx/conf.d/"
+    state: directory
+    owner: root
+    group: root
+    mode: 755
+
 - name: Copy configuration files
   template:
     src: "{{ item.src }}"
