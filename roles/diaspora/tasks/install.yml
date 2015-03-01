@@ -69,6 +69,10 @@
     - deploy
     - assets
 
+- name: stat Gemfile.lock
+  stat: path=/var/www/diaspora/diaspora/Gemfile.lock
+  register: gemfile_lock
+
 - name: Install gem dependencies
   sudo_user: diaspora
   shell: >
@@ -76,7 +80,7 @@
     creates="{{ diaspora_dir }}"/vendor/bundle/
     RAILS_ENV=production /usr/bin/bundle install --without test development --deployment
   register: bundle_install
-  when: bundler|success
+  when: bundler|success and gemfile_lock.changed == true
   tags:
     - gem
     - bundler
