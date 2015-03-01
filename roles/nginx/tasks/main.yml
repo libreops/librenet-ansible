@@ -55,16 +55,9 @@
   tags:
     - ssl
 
-- name: Check if hdparam.pem exists
-  command: test -f /etc/ssl/dhparam.pem
-  register: dhparam_pem
-  failed_when: false
-  tags:
-    - ssl
-
 - name: Create dhparam.pem if not exists
   command: openssl dhparam -out /etc/ssl/dhparam.pem 2048
-  when: dhparam_pem|failed
+  creates: /etc/ssl/dhparam.pem
   tags:
     - ssl
 
