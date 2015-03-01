@@ -22,6 +22,7 @@
     - [Nginx only changes](#nginx-only-changes)
     - [Config only changes](#config-only-changes)
     - [Assets only changes](#assets-only-changes)
+- [Testing](#testing)
 - [Vagrant](#vagrant)
   - [Requirements](#requirements)
   - [Run](#run)
