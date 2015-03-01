@@ -47,7 +47,9 @@
 
 - name: Add github to known_hosts
   sudo_user: diaspora
-  shell: "ssh-keyscan -H github.com > /home/diaspora/.ssh/known_hosts"
+  shell: >
+    creates=/home/diaspora/.ssh/known_hosts
+    ssh -keyscan -H github.com > /home/diaspora/.ssh/known_hosts
   register: github_known_hosts
   tags:
     - git
