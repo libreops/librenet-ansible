@@ -20,8 +20,9 @@ listen '/var/run/diaspora/diaspora.sock', :backlog => 1024
 
 working_directory "/var/www/diaspora" # available in 0.94.0+
 
-stderr_path AppConfig.server.stderr_log.get if AppConfig.server.stderr_log.present?
-stdout_path AppConfig.server.stdout_log.get if AppConfig.server.stdout_log.present?
+stderr_path '/var/www/diaspora/log/unicorn_err.log'
+#stderr_path AppConfig.server.stderr_log.get if AppConfig.server.stderr_log.present?
+#stdout_path AppConfig.server.stdout_log.get if AppConfig.server.stdout_log.present?
 
 before_fork do |server, worker|
   # If using preload_app, enable this line

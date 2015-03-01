@@ -80,6 +80,20 @@
     - bundler
     - update
 
+- name: Copy unicorn.rb
+  copy: >
+    src=unicorn.rb
+    dest="{{ diaspora_dir }}/config/unicorn.rb"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - unicorn
+
 - name: Copy diaspora.yml
   template: >
     src=diaspora.yml.j2
