@@ -284,6 +284,12 @@ ansible-playbook -i hosts deploy.yml -t assets
 
 It will fetch the new code and run the rake task to precompile the assets.
 
+# Testing
+
+There is some minimal testing done. You can run `./bin/ansible-test` locally
+and it will test the syntax of `deploy.yml` and all its tasks. Travis is setup
+to also test the syntax.
+
 # Vagrant
 
 For testing purposes, a Vagrantfile is provided, so that a staging environment

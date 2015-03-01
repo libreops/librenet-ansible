@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ansible-playbook --syntax-check -i tests/inventory deploy.yml
+ansible-playbook --syntax-check --list-tasks -i tests/inventory deploy.yml
 #for playbook in $(ls playbooks/*.yml)
 #  do ansible-playbook --syntax-check -i tests/inventory ${playbook}
 #done
