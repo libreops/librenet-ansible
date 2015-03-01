@@ -56,8 +56,7 @@
     - ssl
 
 - name: Create dhparam.pem if not exists
-  command: openssl dhparam -out /etc/ssl/dhparam.pem 2048
-  creates: /etc/ssl/dhparam.pem
+  command: openssl dhparam -out /etc/ssl/dhparam.pem 2048 creates=/etc/ssl/dhparam.pem
   tags:
     - ssl
 
