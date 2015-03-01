@@ -330,17 +330,6 @@ to match your own setup.
 
 `ansible.playbook` (string): path to the playbook to run (relative/absolute).
 
-`ansible.inventory_path` (string): path to the inventory file (relative/absolute).
-
-`ansible.limit` (string): limit playbook to run only on a particular host.
-This is defined in the hosts file. Use in conjuction with the IP that is set up
-in Vagrantfile.
-
-For example, `hosts` file should include:
-```
-diaspora_staging ansible_ssh_host=192.168.33.10
-```
-
 `ansible.vault_password_file` (string): path to the `vault-passwd.txt` (relative/absolute).
 
 `ansible.extra_vars = { sitename: "staging.librenet.local" }` (dictionary):
