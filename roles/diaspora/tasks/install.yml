@@ -55,6 +55,19 @@
     - git
     - ssh
 
+- name: Get last remote commit sha
+  shell: >
+    git ls-remote https://github.com/librenet/librenet.gr.git HEAD | awk '{print $1}'
+  register: remote_sha
+  changed_when: false
+
+- name: Get last local commit sha
+  shell: >
+    chdir=/var/www/diaspora/
+    git rev-parse HEAD
+  register: local_sha
+  changed_when: false
+
 - name: Git checkout librenet branch
   sudo_user: diaspora
   git: >
@@ -62,7 +75,8 @@
     version="{{ git_branch }}"
     dest="{{ diaspora_dir }}"
     remote=librenet
-  when: add_user|success and github_known_hosts|success
+  when: add_user|success and github_known_hosts|success and (remote_sha.stdout != local_sha.stdout)
+  register: git_checkout
   tags:
     - git
     - diaspora
@@ -93,6 +107,7 @@
     owner=diaspora
     group=diaspora
     mode=644
+  when: git_checkout|changed
   notify:
     - restart unicorn
   tags:
@@ -153,23 +168,30 @@
     - database
     - seed
 
+- name: stat db/schema.rb
+  stat: path=/var/www/diaspora/db/schema.rb
+  register: schemarb
+
 - name: Migrate database
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
     RAILS_ENV=production /usr/bin/bundle exec "rake db:migrate"
-  when: bundle_install|success
+  when: bundle_install|success and schemarb.changed == true
   tags:
     - update
     - database
     - migration
 
-  # Recompile assets only if app/assets exists and any file is changed
+- debug: var=git_checkout
+
+  # Recompile assets only if any file has changed
 - name: Recompile assets
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
     RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile tmp:cache:clear"
+  when: bundle_install|success and git_checkout.changed == true
   notify:
     - restart unicorn
   tags:
