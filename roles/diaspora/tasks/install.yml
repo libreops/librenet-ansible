@@ -78,14 +78,27 @@
   stat: path=/var/www/diaspora/diaspora/Gemfile.lock
   register: gemfile_lock
 
+- name: Copy routes.rb
+  template: >
+    src=routes.rb.j2
+    dest="{{ diaspora_dir }}/config/routes.rb"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - unicorn
+
 - name: Copy unicorn.rb
-  copy: >
-    src=unicorn.rb
+  template: >
+    src=unicorn.rb.j2
     dest="{{ diaspora_dir }}/config/unicorn.rb"
     owner=diaspora
     group=diaspora
     mode=644
-  when: git_checkout|changed
   notify:
     - restart unicorn
   tags:
@@ -179,7 +192,7 @@
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
-    RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile tmp:cache:clear"
+    RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile"
   when: bundle_install|success
   notify:
     - restart unicorn

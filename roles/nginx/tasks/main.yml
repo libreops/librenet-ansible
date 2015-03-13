@@ -7,9 +7,6 @@
   tags:
     - nginx
 
-- name: Enable nginx service
-  service: name=nginx state=started enabled=yes
-
 - name: Remove default configuration file
   file:
     path: etc/nginx/nginx.conf.default
@@ -88,3 +85,6 @@
   changed_when: 'rm_result.stdout != ""'
   tags:
     - nginx
+
+- name: Enable nginx service
+  service: name=nginx state=started enabled=yes
