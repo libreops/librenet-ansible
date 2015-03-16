@@ -5,6 +5,12 @@
   gather_facts: false
   tasks:
 
+    - name: Restart nginx
+      command: systemctl restart nginx.service
+      tags:
+        - nginx
+        - diaspora
+
     - name: Restart unicorn
       command: systemctl restart diaspora-unicorn.service
       tags:

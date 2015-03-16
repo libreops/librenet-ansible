@@ -3,6 +3,16 @@
   gather_facts: false
   tasks:
 
+    - name: status nginx
+      command: systemctl status nginx.service
+      register: nginx_status
+      failed_when:  nginx_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - nginx
+        - diaspora
+
     - name: status unicorn
       command: systemctl status diaspora-unicorn.service
       register: unicorn_status
