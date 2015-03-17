@@ -70,6 +70,10 @@ monit_process_list:
 
   - pid: 'sshd.pid'
 
+  - pid: ''
+    process: 'redis'
+    regex: 'redis'
+
   - pid: 'mariadb/mariadb.pid'
 
   - pid: 'diaspora/unicorn.pid'
@@ -88,6 +92,11 @@ monit_process_dependent_list: []
 
   # The pid path is relative to /var/run, this is required.
   #- pid: ''
+
+    # Rrocess can be a pidfile or match a regex. Defaults to `with pidfile`.
+    # You can test if a process match a pattern from the command-line using
+    # `monit procmatch "regex-pattern"`
+    #regex: 'bar'
 
     # The process is simply the process name, defaults to the pid's basename.
     #process: 'foo'

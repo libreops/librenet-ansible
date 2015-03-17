@@ -6,5 +6,8 @@
 - name: restart sidekiq
   service: name=sidekiq state=restarted
 
+- name: restart redis
+  service: name=redis state=restarted
+
 - name: daemon reload
   command: systemctl daemon-reload
