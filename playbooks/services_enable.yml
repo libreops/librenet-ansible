@@ -1,0 +1,41 @@
+---
+
+- hosts: all
+  sudo: yes
+  gather_facts: false
+  tasks:
+
+    - name: Enable nginx
+      service: name=nginx state=started enabled=yes
+      tags:
+        - nginx
+        - diaspora
+
+    - name: Enable unicorn
+      service: name=unicorn state=started enabled=yes
+      tags:
+        - unicorn
+        - diaspora
+
+    - name: Enable sidekiq
+      service: name=sidekiq state=started enabled=yes
+      tags:
+        - sidekiq
+        - diaspora
+
+    - name: Enable redis
+      service: name=redis state=started enabled=yes
+      tags:
+        - redis
+        - diaspora
+
+    - name: Enable mariadb
+      service: name=mariadb state=started enabled=yes
+      tags:
+        - mariadb
+        - mysql
+
+    - name: Enable sshd
+      service: name=sshd state=started enabled=yes
+      tags:
+        - ssh
