@@ -7,7 +7,7 @@
     - common
     - nginx
     - mariadb
-    - diaspora
+    - { role: diaspora, tags: ['diaspora']
 
 # Enable services on boot.
 - include: ./playbooks/services_enable.yml

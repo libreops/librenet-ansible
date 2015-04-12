@@ -12,8 +12,6 @@
     - libxslt-devel
     - libxml2-devel
     - gcc
-  tags:
-    - diaspora
 
 - name: Install bundler
   gem: name=bundler state=present user_install=no
@@ -70,7 +68,6 @@
   register: git_checkout
   tags:
     - git
-    - diaspora
     - deploy
     - assets
 
@@ -88,7 +85,6 @@
   notify:
     - restart unicorn
   tags:
-    - diaspora
     - config
     - unicorn
 
@@ -102,7 +98,6 @@
   notify:
     - restart unicorn
   tags:
-    - diaspora
     - config
     - unicorn
 
@@ -117,7 +112,6 @@
     - restart unicorn
     - restart sidekiq
   tags:
-    - diaspora
     - config
     - private
     - yaml
@@ -136,7 +130,6 @@
     - restart unicorn
     - restart sidekiq
   tags:
-    - diaspora
     - config
     - database
     - yaml
