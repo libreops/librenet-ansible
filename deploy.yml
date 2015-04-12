@@ -6,7 +6,7 @@
   roles:
     - common
     - { role: nginx, tags: ['nginx'] }
-    - mariadb
+    - { role: mariadb, tags: ['database', 'mariadb'] }
     - { role: diaspora, tags: ['diaspora'] }
 
 # Enable services on boot.

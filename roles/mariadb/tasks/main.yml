@@ -7,13 +7,9 @@
     - mariadb-server
     - mariadb-devel
     - MySQL-python
-  tags:
-    - database
 
 - name: Ensure MariaDB is started and enabled on boot
   service: name=mariadb state=started enabled=yes
-  tags:
-    - database
 
 - include: secure-installation.yml tags=database
 - include: databases.yml tags=database
