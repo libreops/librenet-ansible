@@ -4,8 +4,6 @@
 - name: Install nginx
   yum: name=nginx state=present
   notify: restart nginx
-  tags:
-    - nginx
 
 - name: Remove default configuration file
   file:
@@ -39,8 +37,6 @@
       dest: "/etc/nginx/conf.d/diaspora.conf"
       }
   notify: restart nginx
-  tags:
-    - nginx
 
 - name: Create ssl directory
   file:
@@ -74,8 +70,6 @@
       dest: "{{ ssl_cert_key }}"
       }
   notify: restart nginx
-  tags:
-    - nginx
 
 # TODO Currently the stdout is always empty. No way to know if there
 # are access logs or not.
@@ -83,8 +77,6 @@
   shell: find /var/log/nginx/ -name "*access*" -print0 | xargs --no-run-if-empty -0 rm
   register: rm_result
   changed_when: 'rm_result.stdout != ""'
-  tags:
-    - nginx
 
 - name: Enable nginx service
   service: name=nginx state=started enabled=yes
