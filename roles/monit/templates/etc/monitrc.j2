@@ -81,6 +81,8 @@ set httpd port {{ monit_http_port }}
   use address {{ monit_http_bind }}
   allow {{ monit_http_bind }}
   allow {{ web_user }}:{{ web_pass }}
+SSL ENABLE
+PEMFILE /etc/ssl/monit.pem
 
 # Allow additional hosts to access monit's http interface
 {% for item in monit_http_allow %}
