@@ -1,15 +1,28 @@
 ---
 # Diaspora systemd services
-- name: Copy sidekiq systemd service
+- name: Copy unicorn systemd service
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: unicorn.service.j2
+    dest: "{{ systemd_path }}/unicorn.service"
     owner: root
     group: root
     mode: 644
-  with_items:
-    - src: diaspora-sidekiq.service.j2
-      dest: "{{ systemd_path }}/diaspora-sidekiq.service"
+  notify:
+    - daemon reload
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - systemd
+    - unicorn
+
+- name: Copy sidekiq systemd service
+  template:
+    src: sidekiq.service.j2
+    dest: "{{ systemd_path }}/sidekiq.service"
+    owner: root
+    group: root
+    mode: 644
   notify:
     - daemon reload
     - restart sidekiq
@@ -18,16 +31,6 @@
     - config
     - systemd
     - sidekiq
-
-- name: Copy diaspora tmpfiles to persist directories
-  template:
-    src: diaspora.tmpfiles.d
-    dest: /usr/lib/tmpfiles.d/diaspora.conf
-    owner: root
-    group: root
-    mode: 644
-  tags:
-    - unicorn
 
 - name: Create unicorn pid directory
   file:
@@ -39,30 +42,15 @@
   tags:
     - unicorn
 
-- name: Copy unicorn systemd service
+- name: Copy diaspora tmpfiles to persist directories
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: diaspora.tmpfiles.d
+    dest: /usr/lib/tmpfiles.d/diaspora.conf
     owner: root
     group: root
     mode: 644
-  with_items:
-    - src: diaspora-unicorn.service.j2
-      dest: "{{ systemd_path }}/diaspora-unicorn.service"
-  notify:
-    - daemon reload
-    - restart unicorn
   tags:
-    - diaspora
-    - config
-    - systemd
     - unicorn
-
-- name: Enable unicorn/sidekiq services
-  service: name={{ item }} state=started enabled=yes
-  with_items:
-    - diaspora-unicorn
-    - diaspora-sidekiq
 
 - name: Enable systemd watchdog
   lineinfile: >
@@ -75,3 +63,9 @@
   tags:
     - config
     - systemd
+
+- name: Enable unicorn/sidekiq services
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - unicorn
+    - sidekiq

@@ -19,6 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "diaspora"
 
+  config.vm.network "forwarded_port", guest: 2112, host: 2112
+
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
   config.vm.define :diaspora do |diaspora|
   end

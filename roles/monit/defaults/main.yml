@@ -65,7 +65,18 @@ monit_mail_message: |
 # ---- Process monitoring ----
 
 # Which processes do you want to monitor?
-monit_process_list: []
+monit_process_list:
+  - pid: 'nginx.pid'
+
+  - pid: 'sshd.pid'
+
+  - pid: 'mariadb/mariadb.pid'
+
+  - pid: 'diaspora/unicorn.pid'
+
+  - pid: 'diaspora/sidekiq.pid'
+    script: |
+      if totalmem is greater than 500 MB for 2 cycles then restart
 
 # The same as process list except scoped to a specific host or group.
 monit_process_group_list: []
@@ -99,7 +110,8 @@ monit_mmonit_url: ''
 # Example:
 #monit_mmonit_url: http://user:password@mmonithost:8080/collector
 
-monit_http_allow: []
+monit_http_allow:
+  - 0.0.0.0/0.0.0.0
 # Example:
 #monit_http_allow:
   #- user:password

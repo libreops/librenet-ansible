@@ -4,6 +4,6 @@
 
 {% set monit_tpl_process = item.process | default(item.pid | basename | replace('.pid', '')) -%}
 check process {{ monit_tpl_process }} with pidfile {{ monit_base_process_run_state }}/{{ item.pid }}
-  start program = "{{ item.start | default('/etc/init.d/' + monit_tpl_process + " start") }}" with timeout {{ item.timeout | default("60") }} seconds
-  stop program = "{{ item.stop | default('/etc/init.d/' + monit_tpl_process + " stop") }}"
+  start program = "{{ item.start | default('/usr/bin/systemctl start ' + monit_tpl_process + '.service') }}" with timeout {{ item.timeout | default("30") }} seconds
+  stop program = "{{ item.stop | default('/usr/bin/systemctl stop ' + monit_tpl_process + '.service') }}"
 {% if item.script is defined and item.script %}{{ item.script | indent(2, true) }}{% endif %}

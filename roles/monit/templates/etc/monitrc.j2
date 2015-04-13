@@ -13,7 +13,7 @@ set logfile {{ monit_logfile }} {{ monit_syslog }}
 
 # Set the location of the Monit id file which stores the unique id
 # for this instance.
-set idfile {{ monit_idfile }}
+#set idfile {{ monit_idfile }}
 
 # Set the location of the Monit state file which saves monitoring states
 # on each cycle.
@@ -78,11 +78,11 @@ set mmonit {{ monit_mmonit_url }}
 # Run the http server and allow localhost to view it, this is required to
 # make monit's CLI function.
 set httpd port {{ monit_http_port }}
-  use address {{ monit_http_bind }}
-  allow {{ monit_http_bind }}
+#  use address {{ monit_http_bind }}
+#  allow {{ monit_http_bind }}
 # Allow additional hosts to access monit's http interface
 {% for item in monit_http_allow %}
   allow {{ item }}
 {% endfor %}
 
-include /etc/monit/conf.d/*
+include /etc/monit.d/*

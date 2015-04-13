@@ -9,7 +9,7 @@ monit_base_process_run_state: '/var/run'
 
 monit_logfile: syslog
 monit_idfile: '{{ monit_lib }}/id'
-monit_statefile: '{{ monit_lib }}/state'
+monit_statefile: '/root/.monit.state'
 
 # --- HTTP ---
 
