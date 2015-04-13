@@ -44,7 +44,7 @@
 
 - name: Get last remote commit sha
   shell: >
-    git ls-remote https://github.com/librenet/librenet.gr.git HEAD | awk '{print $1}'
+    git ls-remote {{ git_repo_url }} HEAD | awk '{print $1}'
   register: remote_sha
   changed_when: false
 
@@ -64,7 +64,7 @@
     dest: "{{ diaspora_dir }}"
     remote: librenet
     accept_hostkey: yes
-  when: add_user|success and (remote_sha.stdout != local_sha.stdout)
+  when: add_user|success and (remote_sha.stdout != local_sha.stdout or local_sha.stdout == "")
   register: git_checkout
   tags:
     - git
