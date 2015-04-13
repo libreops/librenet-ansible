@@ -42,6 +42,14 @@
     group=diaspora
     mode=755
 
+- name: Create log directory
+  file: >
+    path=/var/log/diaspora
+    state=directory
+    owner=diaspora
+    group=diaspora
+    mode=755
+
 - name: Get last remote commit sha
   shell: >
     git ls-remote {{ git_repo_url }} HEAD | awk '{print $1}'
@@ -132,6 +140,21 @@
   tags:
     - config
     - database
+    - yaml
+
+- name: Copy sidekiq.yml
+  template: >
+    src=sidekiq.yml.j2
+    dest="{{ diaspora_dir }}/config/sidekiq.yml"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  notify:
+    - restart sidekiq
+  tags:
+    - diaspora
+    - config
+    - sidekiq
     - yaml
 
 - name: Install gem dependencies
