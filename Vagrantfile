@@ -15,6 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--name", "diaspora"]
   end
 
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+
   config.vm.hostname = "diaspora"
 
   # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
@@ -26,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "deploy.yml"
     ansible.vault_password_file = "../vault-passwd.txt"
     ansible.extra_vars = {
-      sitename: "staging.librenet.local"
+      sitename: "diaspora.dev"
     }
   end
 end
