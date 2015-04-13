@@ -1,4 +1,5 @@
 ---
+- include_vars: private.yml
 
 - name: Install Monit
   yum: name=monit state=latest
