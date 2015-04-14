@@ -54,6 +54,8 @@ monit_mail_message: |
   Host:        $HOST
   Description: $DESCRIPTION
 
+  Visit https://monit.librenet.gr for more info.
+
   Your faithful employee,
   Monit
 
