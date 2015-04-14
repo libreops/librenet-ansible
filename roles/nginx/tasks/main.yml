@@ -29,12 +29,16 @@
     mode: 644
   with_items:
     - {
-      src: "../templates/nginx.conf.j2",
+      src: "nginx.conf.j2",
       dest: "/etc/nginx/nginx.conf"
       }
     - {
-      src: "../templates/diaspora.conf.j2",
+      src: "diaspora.conf.j2",
       dest: "/etc/nginx/conf.d/diaspora.conf"
+      }
+    - {
+      src: "monit.conf.j2",
+      dest: "/etc/nginx/conf.d/monit.conf"
       }
   notify: restart nginx
 
@@ -44,7 +48,7 @@
     state: directory
     owner: root
     group: root
-    mode: 755
+    mode: 0700
   tags:
     - ssl
 
@@ -59,7 +63,7 @@
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 644
+    mode: 0400
   with_items:
     - {
       src: "../files/ssl/ssl-unified.crt",

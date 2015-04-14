@@ -1,13 +1,13 @@
 ---
 # handlers file for diaspora
-- name: restart diaspora
-  service: name=gitlab.target state=restarted
-
 - name: restart unicorn
-  service: name=diaspora-unicorn state=restarted
+  service: name=unicorn state=restarted
 
 - name: restart sidekiq
-  service: name=diaspora-sidekiq state=restarted
+  service: name=sidekiq state=restarted
+
+- name: restart redis
+  service: name=redis state=restarted
 
 - name: daemon reload
   command: systemctl daemon-reload

@@ -17,7 +17,7 @@ timeout AppConfig.server.unicorn_timeout.to_i
 
 @sidekiq_pid = nil
 
-pid '/var/run/diaspora/diaspora.pid'
+pid '/var/run/diaspora/unicorn.pid'
 listen '/var/run/diaspora/diaspora.sock', :backlog => 1024
 
 working_directory "/var/www/diaspora" # available in 0.94.0+

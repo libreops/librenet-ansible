@@ -21,13 +21,7 @@ RuntimeDirectoryMode=775
 #WatchdogSec=20s
 Restart=always
 
-CapabilityBoundingSet=
-PrivateTmp=true
-PrivateDevices=true
-ProtectSystem=full
-ProtectHome=true
-
-ExecStart=/usr/bin/bundle exec "unicorn_rails -c {{ diaspora_dir }}/config/unicorn.rb -E production"
+ExecStart=/usr/bin/bundle exec "unicorn_rails -c config/unicorn.rb -E production"
 
 [Install]
 WantedBy=multi-user.target
