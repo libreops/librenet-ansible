@@ -57,20 +57,20 @@ More info: <http://docs.ansible.com/playbooks_checkmode.html>
 
 ### Encrypted sensitive data
 
-There is an encrypted vars file which can be unencrypted with the
-`vault-passwd.txt` file. Below are two options you'll want to use it.
+There is an encrypted private vars file which can be unencrypted with the
+`vault-passwd.txt.gpg` file. Read below on how to use it.
 
 #### Running playbooks
 
-You first need to unencrypt `vault-passwd.txt.gpg` using your gpg key
-(if you are one of librenet.gr's podmins that is) and then use
-`--vault-password-file vault-passwd.txt`. For extra security, after
-successful deployment, you may want to remove the plain text file.
+Some sensitive files like `private.yml` are encrypted with [ansible-vault][vault].
+`vault-passwd.txt.gpg` is automatically decrypted during playbook run.
+That saves us time from running `--vault-password-file vault-passwd.txt`
+each time. The password is decrypted on the fly without the need to decrypt
+to plain text file. It is needed when no tags at all are given, or one of the
+following is used: `private`, `diaspora`, `config`.
 
-It is needed when no tags at all are given, or one of the following is
-used: `private`, `diaspora`, `config`.
-
-Read more in [Ansible vault][vault] and [How do I store private data in git for Ansible?][private].
+Read more in [Using PGP To Encrypt The Ansible Vault][vault-blog] and
+[How do I store private data in git for Ansible?][private].
 
 #### Add more variables
 
@@ -362,3 +362,4 @@ Some useful vagrant links:
 
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
 [private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
+[vault-blog]: https://blog.andrewlorente.com/p/using-pgp-to-encrypt-the-ansible-vault
