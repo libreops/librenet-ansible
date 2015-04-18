@@ -157,6 +157,21 @@
     - sidekiq
     - yaml
 
+- name: Copy newrelic.yml
+  template: >
+    src=newrelic.yml.j2
+    dest="{{ diaspora_dir }}/config/newrelic.yml"
+    owner=diaspora
+    group=diaspora
+    mode=644
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - newrelic
+    - yaml
+
 - name: Install gem dependencies
   sudo_user: diaspora
   shell: >
@@ -182,7 +197,9 @@
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
-    RAILS_ENV=production  /usr/bin/bundle exec "rake db:create db:schema:load"
+    /usr/bin/bundle exec "rake db:create db:schema:load"
+  environment:
+    RAILS_ENV: production
   when: init_seed|failed
   tags:
     - database
@@ -196,19 +213,23 @@
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
-    RAILS_ENV=production /usr/bin/bundle exec "rake db:migrate"
+    /usr/bin/bundle exec "rake db:migrate"
+  environment:
+    RAILS_ENV: production
   when: bundle_install|success and schemarb.changed == true
   tags:
     - update
     - database
     - migration
 
-  # Recompile assets only if any file has changed
+  # Recompile assets
 - name: Recompile assets
   sudo_user: diaspora
   shell: >
     chdir="{{ diaspora_dir }}"
-    RAILS_ENV=production /usr/bin/bundle exec "rake assets:precompile"
+    /usr/bin/bundle exec "rake assets:precompile"
+  environment:
+    RAILS_ENV: production
   when: bundle_install|success
   notify:
     - restart unicorn
