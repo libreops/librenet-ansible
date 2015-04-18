@@ -11,6 +11,10 @@
 - name: Ensure MariaDB is started and enabled on boot
   service: name=mariadb state=started enabled=yes
 
+- name: Configure MariaDB
+  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf
+  notify: restart mariadb
+
 - include: secure-installation.yml tags=database
 - include: databases.yml tags=database
 - include: users.yml tags=database
