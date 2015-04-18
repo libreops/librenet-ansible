@@ -41,6 +41,6 @@
         - ssh
 
     - name: Enable ntp
-      service: name=ntp state=started enabled=yes
+      service: name=ntpd state=started enabled=yes
       tags:
         - ntp
