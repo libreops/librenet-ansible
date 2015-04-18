@@ -11,4 +11,4 @@
     - { role: monit, tags: ['monit'] }
 
 # Enable services on boot.
-#- include: ./playbooks/services_enable.yml
+- include: ./playbooks/services_enable.yml

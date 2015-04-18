@@ -39,3 +39,8 @@
       service: name=sshd state=started enabled=yes
       tags:
         - ssh
+
+    - name: Enable ntp
+      service: name=ntp state=started enabled=yes
+      tags:
+        - ntp
