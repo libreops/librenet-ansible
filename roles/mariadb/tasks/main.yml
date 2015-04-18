@@ -12,7 +12,7 @@
   service: name=mariadb state=started enabled=yes
 
 - name: Configure MariaDB
-  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf
+  template: src=my.cnf.j2 dest=/etc/my.cnf
   notify: restart mariadb
 
 - include: secure-installation.yml tags=database
