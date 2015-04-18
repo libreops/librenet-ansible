@@ -19,11 +19,13 @@
   tags:
     - gem
     - bundler
+    - git
 
 - name: Create bundle symlink to /usr/bin
   file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
   tags:
     - bundler
+    - git
 
 - name: Add diaspora user
   user:
@@ -55,6 +57,8 @@
     git ls-remote {{ git_repo_url }} HEAD | awk '{print $1}'
   register: remote_sha
   changed_when: false
+  tags:
+    - git
 
 - name: Get last local commit sha
   shell: >
@@ -63,6 +67,8 @@
   register: local_sha
   changed_when: false
   ignore_errors: yes
+  tags:
+    - git
 
 - name: Git checkout librenet branch
   sudo_user: diaspora
@@ -72,12 +78,12 @@
     dest: "{{ diaspora_dir }}"
     remote: librenet
     accept_hostkey: yes
+    force: yes
   when: add_user|success and (remote_sha.stdout != local_sha.stdout or local_sha.stdout == "")
   register: git_checkout
   tags:
     - git
     - deploy
-    - assets
 
 - name: stat Gemfile.lock
   stat: path=/var/www/diaspora/diaspora/Gemfile.lock
