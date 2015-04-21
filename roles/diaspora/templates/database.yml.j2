@@ -27,7 +27,7 @@ common: &common
   #<<: *postgres
 
   # Should match environment.sidekiq.concurrency
-  pool: 15
+  pool: {{ sidekiq_workers }}
 
 ##################################################
 #### CONFIGURE ABOVE #############################
