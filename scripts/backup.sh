@@ -13,7 +13,7 @@ UPLOADSDIR="/var/www/diaspora/public/uploads"
 
 # Dump Diaspora's mysql database.
 # You must have /root/.my.cnf properly configured.
-mysqldump -uroot diaspora_production > $SQLFILE
+mysqldump --single-transaction -uroot diaspora_production > $SQLFILE
 
 # Tar everything up and then gunzip it. If there is no uploads folder, just
 # include the database dump.
