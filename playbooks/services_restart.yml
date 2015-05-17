@@ -12,13 +12,13 @@
         - diaspora
 
     - name: Restart unicorn
-      command: systemctl restart diaspora-unicorn.service
+      command: systemctl restart unicorn.service
       tags:
         - unicorn
         - diaspora
 
     - name: Restart sidekiq
-      command: systemctl restart diaspora-sidekiq.service
+      command: systemctl restart sidekiq.service
       tags:
         - sidekiq
         - diaspora
