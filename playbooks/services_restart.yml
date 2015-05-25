@@ -6,36 +6,36 @@
   tasks:
 
     - name: Restart nginx
-      command: systemctl restart nginx.service
+      service: name=nginx state=restarted
       tags:
         - nginx
         - diaspora
 
     - name: Restart unicorn
-      command: systemctl restart unicorn.service
+      service: name=unicorn state=restarted
       tags:
         - unicorn
         - diaspora
 
     - name: Restart sidekiq
-      command: systemctl restart sidekiq.service
+      service: name=sidekiq state=restarted
       tags:
         - sidekiq
         - diaspora
 
     - name: Restart redis
-      command: systemctl restart redis.service
+      service: name=redis state=restarted
       tags:
         - redis
         - diaspora
 
     - name: Restart mariadb
-      command: systemctl restart mariadb.service
+      service: name=mariadb state=restarted
       tags:
         - mariadb
         - mysql
 
     - name: Restart ssh
-      command: systemctl restart sshd.service
+      service: name=ssh state=restarted
       tags:
         - ssh
