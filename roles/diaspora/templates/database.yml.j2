@@ -8,8 +8,8 @@ mysql: &mysql
   username: "{{ mysql_users[0].name }}"
   password: "{{ mysql_users[0].password }}"
 #  socket: /tmp/mysql.sock
-  charset: utf8
-  collation: utf8_bin
+  encoding: utf8mb4
+  collation: utf8mb4_bin
 
 postgres: &postgres
   adapter: postgresql
