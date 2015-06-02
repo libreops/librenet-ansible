@@ -89,19 +89,6 @@
   stat: path=/var/www/diaspora/diaspora/Gemfile.lock
   register: gemfile_lock
 
-- name: Copy routes.rb
-  template: >
-    src=routes.rb.j2
-    dest="{{ diaspora_dir }}/config/routes.rb"
-    owner=diaspora
-    group=diaspora
-    mode=644
-  notify:
-    - restart unicorn
-  tags:
-    - config
-    - unicorn
-
 - name: Copy unicorn.rb
   template: >
     src=unicorn.rb.j2
