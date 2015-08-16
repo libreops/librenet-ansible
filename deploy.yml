@@ -5,10 +5,10 @@
 
   roles:
     - common
-    - { role: nginx, tags: ['nginx'] }
     - { role: mariadb, tags: ['database', 'mariadb'] }
     - { role: diaspora, tags: ['diaspora'] }
     - { role: monit, tags: ['monit'] }
+    - { role: nginx, tags: ['nginx'] }
 
 # Enable services on boot.
 - include: ./playbooks/services_enable.yml
