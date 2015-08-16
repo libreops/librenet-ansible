@@ -3,6 +3,9 @@
   sudo: yes
   sudo_user: root
 
+  vars_files:
+    - private.yml
+
   roles:
     - common
     - { role: mariadb, tags: ['database', 'mariadb'] }

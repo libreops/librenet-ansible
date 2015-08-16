@@ -1,0 +1,2 @@
+camo_key: "{{ CAMO_KEY }}"
+camo_length_limit: 10485760
