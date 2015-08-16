@@ -5,6 +5,10 @@ upstream diaspora {
     server unix:/var/run/diaspora/diaspora.sock fail_timeout=0;
 }
 
+upstream camo {
+    server 127.0.0.1:8081;
+}
+
 server {
     listen [::]:80;
     listen 80;
@@ -48,5 +52,10 @@ server {
 
       proxy_pass http://diaspora;
     }
-}
 
+    location /camo/ {
+        proxy_redirect off;
+        proxy_pass http://camo/;
+        break;
+    }
+}
