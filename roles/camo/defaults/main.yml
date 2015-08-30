@@ -14,10 +14,10 @@ camo_header_via: "Camo Asset Proxy {{ camo_version }}"
 
 # The shared key used to generate the HMAC digest, for example using
 # `pwgen -sy 64`, but make sure your key does not contain a backslash
-camo_key:
+camo_key: "{{ CAMO_KEY }}"
 
 # The maximum `Content-Length` Camo will proxy. (default: 5242880)
-camo_length_limit: 5242880
+camo_length_limit: 10485760
 
 # The logging level used for reporting debug or error information. Options are
 # `debug` and `disabled`. (default: `disabled`)
