@@ -9,6 +9,7 @@
     - common
     - { role: mariadb, tags: ['database', 'mariadb'] }
     - { role: postgres, tags: ['database', 'postgres'] }
+    - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
     - { role: monit, tags: ['monit'] }
     - { role: nginx, tags: ['nginx'] }
