@@ -1,5 +1,4 @@
 ---
-
 - hosts: all
   sudo: yes
   gather_facts: false
@@ -29,11 +28,11 @@
         - redis
         - diaspora
 
-    - name: Enable mariadb
-      service: name=mariadb state=started enabled=yes
+    - name: Enable postgres
+      service: name=postgres state=started enabled=yes
       tags:
-        - mariadb
-        - mysql
+        - postgres
+        - database
 
     - name: Enable sshd
       service: name=sshd state=started enabled=yes
