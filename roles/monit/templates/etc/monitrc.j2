@@ -80,7 +80,7 @@ set mmonit {{ monit_mmonit_url }}
 set httpd port {{ monit_http_port }}
   use address {{ monit_http_bind }}
   allow {{ monit_http_bind }}
-  allow {{ web_user }}:{{ web_pass }}
+  allow {{ monit_web_user }}:{{ monit_web_pass }}
 SSL ENABLE
 PEMFILE /etc/ssl/monit.pem
 

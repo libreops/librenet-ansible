@@ -1,3 +1,4 @@
+---
 # --- Paths ---
 
 monit_lib: '/var/lib/monit'
@@ -15,3 +16,6 @@ monit_statefile: '/root/.monit.state'
 
 monit_http_bind: 'localhost'
 monit_http_port: 2112
+
+monit_web_user: "{{ MONIT_WEB_USER }}"
+monit_web_pass: "{{ MONIT_WEB_PASS }}"
