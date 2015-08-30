@@ -1,0 +1,20 @@
+---
+firewalld_rules:
+  ssh:
+    port: "{{ FIREWALLD_SSH_PORT }}"
+    protocol: tcp
+    state: enabled
+    zone: public
+    permanent: true
+  http:
+    port: 80
+    protocol: tcp
+    state: enabled
+    zone: public
+    permanent: true
+  https:
+    port: 443
+    protocol: tcp
+    state: enabled
+    zone: public
+    permanent: true
