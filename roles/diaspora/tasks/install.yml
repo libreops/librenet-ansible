@@ -5,7 +5,6 @@
     - git
     - wget
     - ImageMagick-devel
-    - redis
     - nodejs
     - ruby
     - ruby-devel
@@ -76,7 +75,7 @@
     repo: "{{ git_repo_url }}"
     version: "{{ git_branch }}"
     dest: "{{ diaspora_dir }}"
-    remote: librenet
+    remote: "{{ git_branch }}"
     accept_hostkey: yes
     force: yes
   when: add_user|success and (remote_sha.stdout != local_sha.stdout or local_sha.stdout == "")
@@ -167,10 +166,13 @@
 
 - name: Install gem dependencies
   sudo_user: diaspora
-  shell: >
-    chdir="{{ diaspora_dir }}"
-    creates="{{ diaspora_dir }}"/vendor/bundle/
-    RAILS_ENV=production /usr/bin/bundle install --without test development --deployment
+  shell: /usr/bin/bundle install --without test development --deployment
+  args:
+    chdir: "{{ diaspora_dir }}"
+    creates: "{{ diaspora_dir }}/vendor/bundle/"
+  environment:
+    RAILS_ENV: production
+    DB: postgres
   register: bundle_install
   when: bundler|success
   tags:
@@ -178,22 +180,27 @@
     - bundler
     - update
 
+# Pick a table of Diaspora's schema db and check against it.
+# If the database is populated, the 'tags' table should exist.
+# If it exists, the output should be: (1 row).
 - name: Check if database is already populated
-  command: test -f "/var/lib/mysql/{{ mysql_databases[0].name }}/aspects.frm"
+  sudo_user: postgres
+  shell: psql -d diaspora_production -c "SELECT relname FROM pg_class WHERE relname='tags';" | grep '(1 row)'
   ignore_errors: true
   changed_when: false
-  register: init_seed
+  register: check_db
   tags:
-    -database
+    - database
 
-- name: Initial Seed of database (destructive, run only 1st time)
+- name: Initial Seed of database (destructive, runs only the first time)
   sudo_user: diaspora
-  shell: >
-    chdir="{{ diaspora_dir }}"
-    /usr/bin/bundle exec "rake db:create db:schema:load"
+  shell: /usr/bin/bundle exec "rake db:create db:schema:load"
+  args:
+    chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-  when: init_seed|failed
+    DB: postgres
+  when: check_db.stdout == "(0 rows)"
   tags:
     - database
     - seed
@@ -204,11 +211,12 @@
 
 - name: Migrate database
   sudo_user: diaspora
-  shell: >
-    chdir="{{ diaspora_dir }}"
-    /usr/bin/bundle exec "rake db:migrate"
+  shell: /usr/bin/bundle exec "rake db:migrate"
+  args:
+    chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
+    DB: postgres
   when: bundle_install|success and schemarb.changed == true
   tags:
     - update
@@ -218,11 +226,12 @@
   # Recompile assets
 - name: Recompile assets
   sudo_user: diaspora
-  shell: >
-    chdir="{{ diaspora_dir }}"
-    /usr/bin/bundle exec "rake assets:precompile"
+  shell: /usr/bin/bundle exec "rake assets:precompile"
+  args:
+    chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
+    DB: postgres
   when: bundle_install|success
   notify:
     - restart unicorn

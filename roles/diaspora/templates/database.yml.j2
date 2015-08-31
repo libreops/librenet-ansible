@@ -3,28 +3,26 @@
 ########################
 mysql: &mysql
   adapter: mysql2
-  host: {{ mysql_users[0].host }}
+  host: localhost
   port: 3306
-  username: "{{ mysql_users[0].name }}"
-  password: "{{ mysql_users[0].password }}"
+  username: "diaspora"
+  password: "password"
 #  socket: /tmp/mysql.sock
   encoding: utf8mb4
   collation: utf8mb4_bin
 
 postgres: &postgres
   adapter: postgresql
-  host: localhost
-  port: 5432
-  username: postgres
-  password:
+  socket: /var/run/postgresql
+  username: 'diaspora'
   encoding: unicode
 
 # Comment the the mysql line and uncomment the postgres line
 # if you want to use postgres
 common: &common
   # Choose one of the following
-  <<: *mysql
-  #<<: *postgres
+  #<<: *mysql
+  <<: *postgres
 
   # Should match environment.sidekiq.concurrency
   pool: {{ sidekiq_workers }}
