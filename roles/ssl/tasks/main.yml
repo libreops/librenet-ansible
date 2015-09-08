@@ -1,2 +1,26 @@
 ---
 # tasks file for ssl
+- name: Create ssl directory
+  file:
+    path: "{{ ssl_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Copy ssl cerificates
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0400
+  with_items:
+    - {
+      src: ssl-unified.crt,
+      dest: "{{ ssl_path }}/ssl.crt"
+      }
+    - {
+      src: ssl.key,
+      dest: "{{ ssl_path }}/ssl.key"
+      }

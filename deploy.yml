@@ -11,6 +11,7 @@
     - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
     - { role: monit, tags: ['monit'] }
+    - { role: ssl, tags: ['ssl'] }
     - { role: nginx, tags: ['nginx'] }
 
 # Enable services on boot.

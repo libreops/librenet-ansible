@@ -1,13 +1,10 @@
 ---
-# tasks file for nginx
-
 - name: Install nginx
   yum: name=nginx state=present
-  notify: restart nginx
 
 - name: Remove default configuration file
   file:
-    path: etc/nginx/nginx.conf.default
+    path: /etc/nginx/nginx.conf.default
     state: absent
   notify:
     - restart nginx
@@ -42,38 +39,12 @@
       }
   notify: restart nginx
 
-- name: Create ssl directory
-  file:
-    path: /etc/ssl/librenet.gr/
-    state: directory
-    owner: root
-    group: root
-    mode: 0700
-  tags:
-    - ssl
-
 - name: Create dhparam.pem if not exists
-  command: openssl dhparam -out /etc/ssl/dhparam.pem 2048 creates=/etc/ssl/dhparam.pem
+  command: >
+    openssl dhparam -out {{ ssl_path }}/dhparam.pem 2048
+    creates={{ ssl_path }}/dhparam.pem
   tags:
     - ssl
-
-- name: Copy ssl cerificates
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: 0400
-  with_items:
-    - {
-      src: "../files/ssl/ssl-unified.crt",
-      dest: "{{ ssl_cert }}"
-      }
-    - {
-      src: "../files/ssl/ssl.key",
-      dest: "{{ ssl_cert_key }}"
-      }
-  notify: restart nginx
 
 # TODO Currently the stdout is always empty. No way to know if there
 # are access logs or not.
