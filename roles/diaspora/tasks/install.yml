@@ -158,10 +158,9 @@
 
 - name: Install gem dependencies
   sudo_user: diaspora
-  shell: /usr/bin/bundle install --without test development --deployment
+  shell: /usr/bin/bundle install --without test development --no-deployment --path vendor/bundle
   args:
     chdir: "{{ diaspora_dir }}"
-    creates: "{{ diaspora_dir }}/vendor/bundle/"
   environment:
     RAILS_ENV: production
     DB: postgres
