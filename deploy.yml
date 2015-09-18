@@ -11,6 +11,7 @@
     - { role: postgres, tags: ['database', 'postgres'] }
     - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
+    - { role: camo, tags: ['camo'] }
     - { role: monit, tags: ['monit'] }
     - { role: ssl, tags: ['ssl'] }
     - { role: nginx, tags: ['nginx'] }
