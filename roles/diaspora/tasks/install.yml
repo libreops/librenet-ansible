@@ -11,6 +11,7 @@
     - libxslt-devel
     - libxml2-devel
     - gcc
+    - patch
 
 - name: Install bundler
   gem: name=bundler state=present user_install=no
