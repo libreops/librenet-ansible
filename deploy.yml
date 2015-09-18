@@ -7,6 +7,7 @@
 
   roles:
     - common
+    - users
     - { role: postgres, tags: ['database', 'postgres'] }
     - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
