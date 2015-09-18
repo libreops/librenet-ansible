@@ -6,8 +6,8 @@
     - private.yml
 
   roles:
-    - common
-    - users
+    - { role: common, tags: ['common'] }
+    - { role: users, tags: ['users'] }
     - { role: postgres, tags: ['database', 'postgres'] }
     - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
