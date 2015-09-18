@@ -29,7 +29,7 @@
         - diaspora
 
     - name: Enable postgres
-      service: name=postgres state=started enabled=yes
+      service: name=postgresql state=started enabled=yes
       tags:
         - postgres
         - database
