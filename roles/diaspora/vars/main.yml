@@ -4,6 +4,8 @@ git_repo_url: https://github.com/librenet/librenet.gr.git
 git_branch: librenet
 sidekiq_workers: 25
 
+camo_key: "{{ CAMO_KEY }}"
+
 newrelic_key: "{{ DIASPORA_NEWRELIC_KEY }}"
 
 piwik_host: "{{ DIASPORA_PIWIK_HOST }}"
