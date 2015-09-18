@@ -76,7 +76,12 @@ monit_process_list:
     process: 'redis'
     regex: 'redis'
 
+  - pid: ''
+    process: 'postgres'
+    regex: 'postgres'
+
   - pid: 'mariadb/mariadb.pid'
+    delete: true
 
   - pid: 'diaspora/unicorn.pid'
 
