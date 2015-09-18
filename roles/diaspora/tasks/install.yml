@@ -32,7 +32,7 @@
     state=directory
     owner=diaspora
     group=diaspora
-    mode=755
+    mode=0755
 
 - name: Create log directory
   file: >
@@ -40,7 +40,7 @@
     state=directory
     owner=diaspora
     group=diaspora
-    mode=755
+    mode=0755
 
 - name: Get last remote commit sha
   shell: >
@@ -85,7 +85,7 @@
     dest="{{ diaspora_dir }}/config/unicorn.rb"
     owner=diaspora
     group=diaspora
-    mode=644
+    mode=0644
   notify:
     - restart unicorn
   tags:
@@ -98,7 +98,7 @@
     dest="{{ diaspora_dir }}/config/diaspora.yml"
     owner=diaspora
     group=diaspora
-    mode=644
+    mode=0644
   notify:
     - restart unicorn
     - restart sidekiq
@@ -115,7 +115,7 @@
     dest="{{ diaspora_dir }}/config/database.yml"
     owner=diaspora
     group=diaspora
-    mode=644
+    mode=0644
   register: database_yml
   notify:
     - restart unicorn
@@ -131,7 +131,7 @@
     dest="{{ diaspora_dir }}/config/sidekiq.yml"
     owner=diaspora
     group=diaspora
-    mode=644
+    mode=0644
   notify:
     - restart sidekiq
   tags:
@@ -146,7 +146,7 @@
     dest="{{ diaspora_dir }}/config/newrelic.yml"
     owner=diaspora
     group=diaspora
-    mode=644
+    mode=0644
   notify:
     - restart unicorn
   tags:

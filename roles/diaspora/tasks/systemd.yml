@@ -6,7 +6,7 @@
     dest: "{{ systemd_path }}/unicorn.service"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   notify:
     - daemon reload
     - restart unicorn
@@ -22,7 +22,7 @@
     dest: "{{ systemd_path }}/sidekiq.service"
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   notify:
     - daemon reload
     - restart sidekiq
@@ -38,7 +38,7 @@
     state: directory
     owner: diaspora
     group: diaspora
-    mode: 755
+    mode: 0755
   tags:
     - unicorn
 
@@ -48,7 +48,7 @@
     dest: /usr/lib/tmpfiles.d/diaspora.conf
     owner: root
     group: root
-    mode: 644
+    mode: 0644
   tags:
     - unicorn
 
