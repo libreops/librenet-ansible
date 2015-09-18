@@ -196,10 +196,6 @@
     - database
     - seed
 
-- name: stat db/schema.rb
-  stat: path=/var/www/diaspora/db/schema.rb
-  register: schemarb
-
 - name: Migrate database
   sudo_user: diaspora
   shell: /usr/bin/bundle exec "rake db:migrate"
@@ -208,7 +204,7 @@
   environment:
     RAILS_ENV: production
     DB: postgres
-  when: bundle_install|success and schemarb.changed == true
+  when: bundle_install|success
   tags:
     - update
     - database
