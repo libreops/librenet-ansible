@@ -25,6 +25,8 @@
     - libxml2-devel
     - libffi-devel
     - libxslt-devel
+    - postfix
+    - ed
   tags:
     - yum
     - pkg
