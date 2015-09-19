@@ -113,9 +113,10 @@
     - database
     - yaml
 
-- name: Copy sidekiq.yml
-  template: >
-    src=sidekiq.yml.j2
+- name: Insert pid in sidekiq.yml
+  lineinfile: >
+    insertafter="^:verbose: false$"
+    line=":pidfile: /var/run/diaspora/sidekiq.pid"
     dest="{{ diaspora_dir }}/config/sidekiq.yml"
     owner=diaspora
     group=diaspora
