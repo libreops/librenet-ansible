@@ -1,0 +1,6 @@
+---
+- name: reload postgresql
+  service: name=postgresql state=reloaded
+
+- name: restart postgresql
+  service: name=postgresql state=restarted

@@ -1,0 +1,60 @@
+---
+- name: Set SELinux to enforcing
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: ^SELINUX=
+    line: SELINUX=enforcing
+
+- name: Install required packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - policycoreutils-python
+    - policycoreutils-devel
+    - setroubleshoot-server
+
+- name: Check SSH port
+  shell: semanage port --list | grep {{ FIREWALLD_SSH_PORT }}
+  register: seport
+  changed_when: false
+
+- name: Allow non-default SSH port
+  command: "semanage port -a -t ssh_port_t -p tcp {{ FIREWALLD_SSH_PORT }}"
+  when: seport|failed
+
+- name: Get latest installed version of policy module
+  shell: semodule -l | grep diaspora | awk '{ print $2 }'
+  register: installed_module_version
+  changed_when: false
+
+- name: Copy policy module
+  template:
+    src: "{{ policy_mod_name }}.te.j2"
+    dest: /tmp/{{ policy_mod_name }}.te
+  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+
+- name: Create mod file
+  command: "checkmodule -M -m -o {{ policy_mod_name }}.mod {{ policy_mod_name }}.te"
+  args:
+    chdir: /tmp/
+  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+
+- name: Create compiled module
+  command: "semodule_package -o {{ policy_mod_name }}.pp -m {{ policy_mod_name }}.mod"
+  args:
+    chdir: /tmp/
+  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+
+- name: Enable module
+  command: "semodule -i {{ policy_mod_name }}.pp"
+  args:
+    chdir: /tmp/
+  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+
+- name: Remove generated modules
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  with_items:
+    - "{{ policy_mod_name }}.te"
+    - "{{ policy_mod_name }}.mod"
+    - "{{ policy_mod_name }}.pp"

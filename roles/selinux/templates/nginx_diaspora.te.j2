@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+module {{ policy_mod_name }} {{ policy_mod_version }};
+
+require {
+	type var_run_t;
+	type httpd_t;
+	type var_t;
+	type transproxy_port_t;
+	class sock_file write;
+	class tcp_socket name_connect;
+	class file { read getattr open };
+}
+
+#============= httpd_t ==============
+
+#!!!! This avc can be allowed using the boolean 'httpd_can_network_connect'
+allow httpd_t transproxy_port_t:tcp_socket name_connect;
+allow httpd_t var_run_t:sock_file write;
+allow httpd_t var_t:file { read getattr open };

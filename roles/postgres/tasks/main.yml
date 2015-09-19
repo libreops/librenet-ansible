@@ -1,0 +1,28 @@
+---
+- name: Install Packages
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - postgresql-server
+    - postgresql-devel
+    - python-psycopg2
+
+- name: Init db
+  shell: postgresql-setup initdb creates=/var/lib/pgsql/data/pg_ident.conf
+
+- name: Start and enable database
+  service: name=postgresql state=started enabled=yes
+
+- name: Create Database User
+  sudo_user: postgres
+  postgresql_user:
+    user: "{{ database.user }}"
+    role_attr_flags: CREATEDB,NOSUPERUSER
+
+- name: Create Database.
+  sudo_user: postgres
+  postgresql_db:
+    name: "{{ database.name }}"
+    owner: "{{ database.user }}"

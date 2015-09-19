@@ -1,13 +1,21 @@
 ---
 - hosts: all
-  sudo: yes
-  sudo_user: root
+  sudo: true
+
+  vars_files:
+    - private.yml
 
   roles:
-    - common
-    - { role: mariadb, tags: ['database', 'mariadb'] }
+    - { role: common, tags: ['common'] }
+    - { role: users, tags: ['users'] }
+    - { role: postgres, tags: ['database', 'postgres'] }
+    - { role: redis, tags: ['redis'] }
     - { role: diaspora, tags: ['diaspora'] }
+    - { role: camo, tags: ['camo'] }
     - { role: monit, tags: ['monit'] }
+    - { role: ssl, tags: ['ssl'] }
+    - { role: firewalld, tags: ['firewall'] }
+    - { role: selinux, tags: ['selinux'] }
     - { role: nginx, tags: ['nginx'] }
 
 # Enable services on boot.

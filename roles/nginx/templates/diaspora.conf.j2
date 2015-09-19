@@ -5,6 +5,10 @@ upstream diaspora {
     server unix:/var/run/diaspora/diaspora.sock fail_timeout=0;
 }
 
+upstream camo {
+    server 127.0.0.1:8081;
+}
+
 server {
     listen [::]:80;
     listen 80;
@@ -25,10 +29,10 @@ server {
 
     ssl_certificate {{ ssl_cert }};
     ssl_certificate_key {{ ssl_cert_key }};
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_dhparam {{ ssl_path }}/dhparam.pem;
     ssl_prefer_server_ciphers on;
 
-    error_log   /var/log/nginx/diaspora_error.log;
+    error_log   /var/log/diaspora/nginx_error.log;
 
     location / {
       # Proxy if requested file not found
@@ -48,5 +52,10 @@ server {
 
       proxy_pass http://diaspora;
     }
-}
 
+    location /camo/ {
+        proxy_redirect off;
+        proxy_pass http://camo/;
+        break;
+    }
+}

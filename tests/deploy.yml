@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - common
+    - { role: postgres, tags: ['database', 'postgres'] }
+    - { role: redis, tags: ['redis'] }
+    - { role: camo, tags: ['camo'] }
+    - { role: firewalld, tags: ['firewall'] }
+    - { role: diaspora, tags: ['diaspora'] }
+    - { role: monit, tags: ['monit'] }
+    - { role: nginx, tags: ['nginx'] }
+
+# Enable services on boot.
+- include: ../playbooks/services_enable.yml

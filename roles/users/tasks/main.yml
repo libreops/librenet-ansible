@@ -1,0 +1,9 @@
+---
+
+- name: Add diaspora user
+  user:
+    name: diaspora
+    comment: "Diaspora"
+    shell: /bin/bash
+    home: /home/diaspora
+    move_home: yes

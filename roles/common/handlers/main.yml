@@ -1,8 +1,0 @@
----
-# handlers file for common
-
-- name: enable redis
-  command: systemctl enable redis.service
-
-- name: restart redis
-  command: systemctl restart redis.service
