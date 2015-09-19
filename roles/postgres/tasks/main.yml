@@ -26,5 +26,3 @@
   postgresql_db:
     name: "{{ database.name }}"
     owner: "{{ database.user }}"
-  tags:
-    - create
