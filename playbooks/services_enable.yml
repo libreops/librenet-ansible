@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  sudo: true
   gather_facts: false
   tasks:
 
@@ -9,37 +9,44 @@
       tags:
         - nginx
         - diaspora
+        - service
 
     - name: Enable unicorn
       service: name=unicorn state=started enabled=yes
       tags:
         - unicorn
         - diaspora
+        - service
 
     - name: Enable sidekiq
       service: name=sidekiq state=started enabled=yes
       tags:
         - sidekiq
         - diaspora
+        - service
 
     - name: Enable redis
       service: name=redis state=started enabled=yes
       tags:
         - redis
         - diaspora
+        - service
 
     - name: Enable postgres
       service: name=postgresql state=started enabled=yes
       tags:
         - postgres
         - database
+        - service
 
     - name: Enable sshd
       service: name=sshd state=started enabled=yes
       tags:
         - ssh
+        - service
 
     - name: Enable ntp
       service: name=ntpd state=started enabled=yes
       tags:
         - ntp
+        - service
