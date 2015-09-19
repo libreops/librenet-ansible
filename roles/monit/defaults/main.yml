@@ -77,8 +77,8 @@ monit_process_list:
     regex: 'redis'
 
   - pid: ''
-    process: 'postgres'
-    regex: 'postgres'
+    process: 'postgresql'
+    regex: 'postgresql'
 
   - pid: 'mariadb/mariadb.pid'
     delete: true
