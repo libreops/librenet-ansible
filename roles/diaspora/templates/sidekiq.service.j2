@@ -11,14 +11,18 @@ User={{ diaspora_user }}
 Group={{ diaspora_group }}
 SyslogIdentifier=diaspora-sidekiq
 WorkingDirectory={{ diaspora_dir }}
+PIDFile={{ sidekiq['pid'] }}
 Environment=RAILS_ENV=production
+Environment=DB=postgres
+RuntimeDirectory=diaspora
+RuntimeDirectoryMode=775
 
 # Automatically restart if it hasn't pinged the system manager
 # for longer than 20s.
 #WatchdogSec=20s
 Restart=on-failure
 
-ExecStart=/usr/bin/bundle exec "sidekiq -e production -C config/sidekiq.yml -L /var/log/diaspora/sidekiq.log >> /var/log/diaspora/sidekiq.log 2>&1"
+ExecStart=/usr/bin/bundle exec "sidekiq -e production -C config/sidekiq.yml -L {{ sidekiq['log'] }} >> {{ sidekiq['log'] }} 2>&1"
 
 [Install]
 WantedBy=multi-user.target

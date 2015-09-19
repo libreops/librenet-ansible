@@ -4,9 +4,11 @@
 diaspora_dir: /var/www/diaspora
 diaspora_user: diaspora
 diaspora_group: diaspora
-unicorn_pid: /var/run/diaspora/diaspora.pid
+unicorn_pid: /var/run/diaspora/unicorn.pid
+unicorn_listen: 'unix:/var/run/diaspora/diaspora.sock'
 pod_name: 'librenet*'
 sitename: 'librenet.gr'
 systemd_path: /usr/lib/systemd/system
 sidekiq:
   log: /var/log/diaspora/sidekiq.log
+  pid: /var/run/diaspora/sidekiq.pid
