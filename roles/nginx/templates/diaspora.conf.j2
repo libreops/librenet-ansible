@@ -32,7 +32,7 @@ server {
     ssl_dhparam {{ ssl_path }}/dhparam.pem;
     ssl_prefer_server_ciphers on;
 
-    error_log   /var/log/nginx/diaspora_error.log;
+    error_log   /var/log/diaspora/nginx_error.log;
 
     location / {
       # Proxy if requested file not found
