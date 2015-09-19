@@ -31,6 +31,7 @@ server {
     ssl_certificate_key {{ ssl_cert_key }};
     ssl_dhparam {{ ssl_path }}/dhparam.pem;
     ssl_prefer_server_ciphers on;
+    add_header Strict-Transport-Security "max-age=31536000";
 
     error_log   /var/log/diaspora/nginx_error.log;
 
