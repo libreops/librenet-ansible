@@ -14,8 +14,9 @@
     - { role: camo, tags: ['camo'] }
     - { role: monit, tags: ['monit'] }
     - { role: ssl, tags: ['ssl'] }
-    - { role: nginx, tags: ['nginx'] }
     - { role: firewalld, tags: ['firewall'] }
+    - { role: selinux, tags: ['selinux'] }
+    - { role: nginx, tags: ['nginx'] }
 
 # Enable services on boot.
 - include: ./playbooks/services_enable.yml
