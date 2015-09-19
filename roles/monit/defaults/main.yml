@@ -77,11 +77,10 @@ monit_process_list:
     regex: 'redis'
 
   - pid: ''
-    process: 'postgresql'
-    regex: 'postgresql'
-
-  - pid: 'mariadb/mariadb.pid'
-    delete: true
+    process: 'postgres'
+    regex: 'postgres'
+    start: '/usr/bin/systemctl start postgresql.service'
+    stop: '/usr/bin/systemctl stop postgresql.service'
 
   - pid: 'diaspora/unicorn.pid'
 
