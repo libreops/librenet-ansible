@@ -50,3 +50,21 @@
       tags:
         - ntp
         - service
+
+    - name: Enable postfix
+      service: name=postfix state=started enabled=yes
+      tags:
+        - postfix
+        - service
+
+    - name: Enable monit
+      service: name=monit state=started enabled=yes
+      tags:
+        - monit
+        - service
+
+    - name: Enable camo
+      service: name=camo state=started enabled=yes
+      tags:
+        - camo
+        - service
