@@ -5,7 +5,7 @@ DATE=$(date +%F-%s)
 DEST="/var/backup"
 LOGFILE="${DEST}/backup.log"
 TARFILE="${DEST}/diaspora-${DATE}.tar.gz"
-SQLFILE="${DEST}/diaspora-${DATE}.sql"
+SQLFILE="${DEST}/diaspora-${DATE}.psql"
 UPLOADSDIR="/var/www/diaspora/public/uploads"
 
 # Make sure backup dir exits
@@ -13,7 +13,7 @@ UPLOADSDIR="/var/www/diaspora/public/uploads"
 
 # Dump Diaspora's mysql database.
 # You must have /root/.my.cnf properly configured.
-mysqldump --single-transaction -uroot diaspora_production > $SQLFILE
+sudo -u diaspora pg_dump diaspora_production -f $SQLFILE
 
 # Tar everything up and then gunzip it. If there is no uploads folder, just
 # include the database dump.
@@ -31,4 +31,4 @@ echo -e "$(du -sh $TARFILE)\t$(md5sum $TARFILE | awk '{print $1}')" >> $LOGFILE
 rm -rf ${DEST}/latest/*tar.gz
 
 # Copy tar backup to `latest/` dir. Hack to download latest backup via ansible.
-cp $TARFILE ${DEST}/latest/
+#cp $TARFILE ${DEST}/latest/

@@ -1,8 +1,7 @@
 ---
-- hosts: all
+- hosts: librenet.gr
   sudo: yes
   gather_facts: true
-  sudo_user: root
   vars:
     backup_path: "/var/backup"
     downloads_path: "../downloads/{{ ansible_hostname }}/"
