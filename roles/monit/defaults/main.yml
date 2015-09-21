@@ -77,6 +77,10 @@ monit_process_list:
     regex: 'redis'
 
   - pid: ''
+    process: 'camo'
+    regex: 'camo'
+
+  - pid: ''
     process: 'postgres'
     regex: 'postgres'
     start: '/usr/bin/systemctl start postgresql.service'
