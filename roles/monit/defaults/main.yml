@@ -90,7 +90,7 @@ monit_process_list:
 
   - pid: 'diaspora/sidekiq.pid'
     script: |
-      if totalmem is greater than 500 MB for 2 cycles then restart
+      if totalmem is greater than 700 MB for 2 cycles then restart
 
 # The same as process list except scoped to a specific host or group.
 monit_process_group_list: []
