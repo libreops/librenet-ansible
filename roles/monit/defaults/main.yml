@@ -85,6 +85,9 @@ monit_process_list:
     regex: 'postgres'
     start: '/usr/bin/systemctl start postgresql.service'
     stop: '/usr/bin/systemctl stop postgresql.service'
+    script: |
+      if failed unixsocket /var/run/postgresql/.s.PGSQL.5432 protocol pgsql
+        then restart
 
   - pid: 'diaspora/unicorn.pid'
 
