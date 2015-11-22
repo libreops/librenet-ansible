@@ -1,0 +1,8 @@
+---
+# vars file for prosody
+
+vhost: 'librenet.gr'
+ssl_path: '/etc/ssl/librenet.gr/'
+ssl_cert: "{{ ssl_path }}ssl.crt"
+ssl_key: "{{ ssl_path }}ssl.key"
+modules_path: '/etc/prosody/modules/'

@@ -225,14 +225,14 @@ configuration: ## Section
   chat: ## Section
 
     ## Enable the chat service and all its components.
-    #enabled: true
+    enabled: true
 
     ## Custom XMPP server configuration goes here.
     server: ## Section
 
       ## Start built-in XMPP server (default=true).
       ## In case you want to run your own server, you should disable it.
-      #enabled: false
+      enabled: false
 
       ## Set the directory in which to look for virtual hosts TLS certificates.
       ## Check documentation on how to generate or configure your existing
@@ -306,7 +306,7 @@ configuration: ## Section
         ## If you'd like to use a proxy, you should set the proxy
         ## option to true, otherwise jsxc always tries to
         ## connect directly to the port specified below.
-        #proxy: true
+        proxy: true
 
         ## Configure the address that vines should listen on.
         #address: '0.0.0.0'
@@ -471,14 +471,14 @@ configuration: ## Section
     ## **or** an encrypted key for an unhosted button.
     paypal_donations: ## Section
       enable: true
-    
+
       ## Currency used (USD, EUR...)
       currency: EUR
-    
+
       ## hosted Paypal button id
       paypal_hosted_button_id: "{{ paypal_hosted_id }}"
       ## OR encrypted key of unhosted button
-      #paypal_unhosted_button_encrypted: "-----BEGIN PKCS7-----" 
+      #paypal_unhosted_button_encrypted: "-----BEGIN PKCS7-----"
 
     ## Bitcoin donations
     ## You can provide a bitcoin address here to allow your users to provide

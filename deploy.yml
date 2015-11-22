@@ -17,6 +17,7 @@
     - { role: firewalld, tags: ['firewall'] }
     - { role: selinux, tags: ['selinux'] }
     - { role: nginx, tags: ['nginx'] }
+    - { role: prosody, tags: ['prosody'] }
 
 # Enable services on boot.
 - include: ./playbooks/services_enable.yml
