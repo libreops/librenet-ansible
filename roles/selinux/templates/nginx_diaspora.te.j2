@@ -6,6 +6,7 @@ require {
         type var_t;
         type var_run_t;
         type httpd_t;
+        type jabber_interserver_port_t;
         type user_home_t;
         type init_t;
         type unreserved_port_t;
@@ -43,3 +44,6 @@ allow httpd_t user_home_t:file read;
 #!!!! This avc is allowed in the current policy
 allow httpd_t var_run_t:sock_file write;
 allow httpd_t var_t:file { read getattr open };
+
+#!!!! This avc can be allowed using the boolean 'httpd_can_network_connect'
+allow httpd_t jabber_interserver_port_t:tcp_socket name_connect;
