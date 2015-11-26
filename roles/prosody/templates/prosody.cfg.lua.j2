@@ -66,8 +66,8 @@ consider_bosh_secure = true;
 ssl = {
     key = "{{ ssl_key }}";
     certificate = "{{ ssl_cert }}";
-    dhparam = "{{ ssl_path }}dhparam.pem";
-    cafile = "{{ ssl_path }}ca-bundle.crt";
+    dhparam = "{{ ssl_path }}/dhparam.pem";
+    cafile = "{{ ssl_path }}/ca-bundle.crt";
     capath = "{{ ssl_path }}";
     ciphers = "ECDH:DH:!CAMELLIA128:!3DES:!MD5:!RC4:!aNULL:!NULL:!EXPORT:!LOW:!MEDIUM";
 }
@@ -99,4 +99,4 @@ VirtualHost "localhost"
 VirtualHost "{{ vhost }}"
   authentication = "diaspora"
   -- Adjust username and password for PostgreSQL
-  auth_diaspora = { driver = "PostgreSQL", database = "{{ database.name }}", username = "{{ database.user }}", password = "", host = "localhost" }
+  auth_diaspora = { driver = "PostgreSQL", database = "{{ database.name }}", username = "{{ database.user }}", password = "{{ database.password }}", host = "localhost" }

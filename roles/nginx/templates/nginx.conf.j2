@@ -49,11 +49,4 @@ http {
     include /etc/nginx/conf.d/*.conf;
 
     index   index.html index.htm;
-
-    location /http-bind {
-        proxy_pass  http://localhost:5280/http-bind;
-        proxy_set_header Host $host;
-        proxy_buffering off;
-        tcp_nodelay on;
-    }
 }

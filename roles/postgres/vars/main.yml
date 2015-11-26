@@ -1,3 +1,4 @@
 database:
   name: diaspora_production
   user: diaspora
+  password: "{{ POSTGRES_USER_PASSWORD }}"

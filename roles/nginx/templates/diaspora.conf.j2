@@ -9,6 +9,10 @@ upstream camo {
     server 127.0.0.1:8081;
 }
 
+upstream chat {
+    server 127.0.0.1:5280;
+}
+
 server {
     listen [::]:80;
     listen 80;
@@ -58,5 +62,25 @@ server {
         proxy_redirect off;
         proxy_pass http://camo/;
         break;
+   }
+
+    location /http-bind {
+      proxy_set_header X-Real-IP          $remote_addr;
+      proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+      proxy_set_header Host               $http_host;
+      proxy_set_header X-Forwarded-Proto  https;
+
+      proxy_redirect off;
+      proxy_connect_timeout 5;
+      proxy_buffering       off;
+
+      proxy_read_timeout    70;
+      keepalive_timeout     70;
+      send_timeout          70;
+
+      client_max_body_size 4M;
+      client_body_buffer_size 128K;
+
+      proxy_pass http://chat;
     }
 }

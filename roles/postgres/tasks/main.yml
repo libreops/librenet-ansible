@@ -16,13 +16,23 @@
   service: name=postgresql state=started enabled=yes
 
 - name: Create Database User
-  sudo_user: postgres
+  become_user: postgres
   postgresql_user:
     user: "{{ database.user }}"
+    password: "{{ database.password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
 
 - name: Create Database.
-  sudo_user: postgres
+  become_user: postgres
   postgresql_db:
     name: "{{ database.name }}"
     owner: "{{ database.user }}"
+
+- name: Copy pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: /var/lib/pgsql/data/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: 0600
+  notify: restart postgresql

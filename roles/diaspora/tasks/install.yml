@@ -62,7 +62,7 @@
     - git
 
 - name: Git checkout librenet branch
-  sudo_user: diaspora
+  become_user: diaspora
   git:
     repo: "{{ git_repo_url }}"
     version: "{{ git_branch }}"
@@ -145,7 +145,7 @@
     - yaml
 
 - name: Install gem dependencies
-  sudo_user: diaspora
+  become_user: diaspora
   shell: /usr/bin/bundle install --without test development --no-deployment --path vendor/bundle
   args:
     chdir: "{{ diaspora_dir }}"
@@ -163,7 +163,7 @@
 # If the database is populated, the 'tags' table should exist.
 # If it exists, the output should be: (1 row).
 - name: Check if database is already populated
-  sudo_user: postgres
+  become_user: postgres
   shell: psql -d diaspora_production -c "SELECT relname FROM pg_class WHERE relname='tags';" | grep '(1 row)'
   ignore_errors: true
   changed_when: false
@@ -172,7 +172,7 @@
     - database
 
 - name: Initial Seed of database (destructive, runs only the first time)
-  sudo_user: diaspora
+  become_user: diaspora
   shell: /usr/bin/bundle exec "rake db:create db:schema:load"
   args:
     chdir: "{{ diaspora_dir }}"
@@ -185,7 +185,7 @@
     - seed
 
 - name: Migrate database
-  sudo_user: diaspora
+  become_user: diaspora
   shell: /usr/bin/bundle exec "rake db:migrate"
   args:
     chdir: "{{ diaspora_dir }}"
@@ -200,7 +200,7 @@
 
   # Recompile assets
 - name: Recompile assets
-  sudo_user: diaspora
+  become_user: diaspora
   shell: /usr/bin/bundle exec "rake assets:precompile"
   args:
     chdir: "{{ diaspora_dir }}"
