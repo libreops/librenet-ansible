@@ -1,5 +1,15 @@
 ---
 
+- name: Copy deploy files
+  copy:
+    src: deploy
+    dest: /var/www/diaspora/public/
+    owner: diaspora
+    group: diaspora
+  tags:
+    - enable
+    - disable
+
 - name: Enable deploy page
   template:
     src: index.html.j2
