@@ -1,0 +1,28 @@
+---
+
+- name: Copy deploy files
+  copy:
+    src: deploy
+    dest: /var/www/diaspora/public/
+    owner: diaspora
+    group: diaspora
+  tags:
+    - enable
+    - disable
+
+- name: Enable deploy page
+  template:
+    src: index.html.j2
+    dest: /var/www/diaspora/public/index.html
+    owner: diaspora
+    group: diaspora
+    mode: 0644
+  tags:
+    - enable
+
+- name: Disable deploy page
+  file:
+    dest: /var/www/diaspora/public/index.html
+    state: absent
+  tags:
+    - disable
