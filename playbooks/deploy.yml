@@ -1,0 +1,14 @@
+---
+#
+# Enable deploy page:
+#   ansible-playbook playbooks/deploy.yml -l librenet.gr -t enable
+#
+# Disable deploy page:
+#   ansible-playbook playbooks/deploy.yml -l librenet.gr -t disable
+#
+- hosts: all
+  become: true
+  gather_facts: false
+
+  roles:
+    - deploy
