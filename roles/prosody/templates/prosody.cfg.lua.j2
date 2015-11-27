@@ -41,9 +41,6 @@ modules_enabled = {
     -- # cp prosody-modules/mod_carbons/mod_carbons.lua /etc/prosody/modules/
         -- "smacks";
         -- "carbons";
-
-    -- diaspora modules
-        "diaspora_contacts";
 };
 
 -- These modules are auto-loaded, but should you want
@@ -100,3 +97,6 @@ VirtualHost "{{ vhost }}"
   authentication = "diaspora"
   -- Adjust username and password for PostgreSQL
   auth_diaspora = { driver = "PostgreSQL", database = "{{ database.name }}", username = "{{ database.user }}", password = "{{ database.password }}", host = "localhost" }
+  modules_enabled = {
+    "diaspora_contacts";
+  };
