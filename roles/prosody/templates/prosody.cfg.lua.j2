@@ -63,9 +63,7 @@ consider_bosh_secure = true;
 ssl = {
     key = "{{ ssl_key }}";
     certificate = "{{ ssl_cert }}";
-    dhparam = "{{ prosody_path }}/dhparam.pem";
-    cafile = "{{ ssl_path }}/ca-bundle.crt";
-    capath = "{{ ssl_path }}";
+    dhparam = "dhparam.pem";
     ciphers = "ECDH:DH:!CAMELLIA128:!3DES:!MD5:!RC4:!aNULL:!NULL:!EXPORT:!LOW:!MEDIUM";
 }
 
