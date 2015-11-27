@@ -82,10 +82,10 @@ authentication = "internal_hashed"
 log = {
     -- info = "prosody.log"; -- Change 'info' to 'debug' for verbose logging
     -- error = "prosody.err";
-    info = "/var/log/prosody/prosody.log";
-    debug = "/var/log/prosody/prosody.log";
-    error = "/var/log/prosody/prosody.err";
-    -- "*syslog"; -- Uncomment this for logging to syslog
+    -- info = "/var/log/prosody/prosody.log";
+    -- debug = "/var/log/prosody/prosody.log";
+    -- error = "/var/log/prosody/prosody.err";
+    "*syslog"; -- Uncomment this for logging to syslog
     -- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
