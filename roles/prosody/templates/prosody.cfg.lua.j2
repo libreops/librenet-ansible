@@ -1,4 +1,4 @@
-admins = { "{{ admins }}" }
+admins = { {% for admin in admins %}"{{ admin }}"{% if not loop.last %},{%endif %}{% endfor %} }
 
 plugin_paths = { "{{ modules_path }}" }
 
