@@ -63,11 +63,12 @@ consider_bosh_secure = true;
 ssl = {
     key = "{{ ssl_key }}";
     certificate = "{{ ssl_cert }}";
-    dhparam = "dhparam.pem";
+    dhparam = "{{ cert_path }}/dhparam.pem";
     ciphers = "ECDH:DH:!CAMELLIA128:!3DES:!MD5:!RC4:!aNULL:!NULL:!EXPORT:!LOW:!MEDIUM";
 }
 
 c2s_require_encryption = true
+s2s_require_encryption = true
 s2s_secure_auth = true
 
 authentication = "internal_hashed"

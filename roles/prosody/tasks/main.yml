@@ -32,25 +32,43 @@
   with_items:
     - {
       src: "mod_auth_diaspora.lua",
-      dest: "{{ modules_path }}mod_auth_diaspora.lua"
+      dest: "{{ modules_path }}/mod_auth_diaspora.lua"
       }
     - {
       src: "mod_diaspora_contacts.lua",
-      dest: "{{ modules_path }}mod_diaspora_contacts.lua"
+      dest: "{{ modules_path }}/mod_diaspora_contacts.lua"
       }
     - {
       src: "mod_carbons.lua",
-      dest: "{{ modules_path }}mod_carbons.lua"
+      dest: "{{ modules_path }}/mod_carbons.lua"
       }
     - {
       src: "mod_smacks.lua",
-      dest: "{{ modules_path }}mod_smacks.lua"
+      dest: "{{ modules_path }}/mod_smacks.lua"
+      }
+
+- name: Copy SSL certs
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    remote_src: true
+    owner: prosody
+    group: prosody
+    mode: 0400
+  with_items:
+    - {
+      src: "{{ ssl_path }}/ssl.crt",
+      dest: "{{ cert_path }}/ssl.crt"
+      }
+    - {
+      src: "{{ ssl_path }}/ssl.key",
+      dest: "{{ cert_path }}/ssl.key"
       }
 
 - name: Create dhparam.pem if not exists
   command: >
-    openssl dhparam -out {{ prosody_path }}/dhparam.pem 2048
-    creates={{ prosody_path }}/dhparam.pem
+    openssl dhparam -out {{ cert_path }}/dhparam.pem 2048
+    creates={{ cert_path }}/dhparam.pem
   tags:
     - ssl
 

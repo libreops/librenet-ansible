@@ -3,8 +3,9 @@
 
 vhost: 'librenet.gr'
 prosody_path: '/etc/prosody'
+cert_path: "{{ prosody_path }}/certs"
+ssl_cert: "{{ cert_path }}/ssl.crt"
+ssl_key: "{{ cert_path }}/ssl.key"
 ssl_path: '/etc/ssl/librenet.gr'
-ssl_cert: "{{ ssl_path }}/ssl.crt"
-ssl_key: "{{ ssl_path }}/ssl.key"
-modules_path: '/etc/prosody/modules/'
+modules_path: "{{ prosody_path }}/modules"
 admins: "{{ PROSODY_ADMINS }}"
