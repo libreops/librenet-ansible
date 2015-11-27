@@ -2,6 +2,7 @@
 # vars file for prosody
 
 vhost: 'librenet.gr'
+prosody_path: '/etc/prosody'
 ssl_path: '/etc/ssl/librenet.gr'
 ssl_cert: "{{ ssl_path }}/ssl.crt"
 ssl_key: "{{ ssl_path }}/ssl.key"

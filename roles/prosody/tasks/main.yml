@@ -41,6 +41,13 @@
       dest: "{{ modules_path }}mod_smacks.lua"
       }
 
+- name: Create dhparam.pem if not exists
+  command: >
+    openssl dhparam -out {{ prosody_path }}/dhparam.pem 2048
+    creates={{ prosody_path }}/dhparam.pem
+  tags:
+    - ssl
+
 - name: Copy configuration file
   template:
     src: "prosody.cfg.lua.j2"
