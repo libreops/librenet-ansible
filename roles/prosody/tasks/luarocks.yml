@@ -1,0 +1,25 @@
+---
+- name: Fix lua lib_modules_path
+  lineinfile:
+    insertafter: EOF
+    line: 'lib_modules_path="/lib64/lua/"..lua_version'
+    dest: /etc/luarocks/config-5.1.lua
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install lua-bcrypt using luarocks
+  command: >
+    luarocks-5.1 install bcrypt
+    creates={{ lua_lib_path }}/bcrypt.so
+
+- name: Install luadbi using luarocks
+  command: >
+    luarocks-5.1 install lua-dbi
+    creates=/usr/share/lua/5.1/DBI.lua
+
+- name: Install luadbi-postgresql using luarocks
+  command: >
+    luarocks-5.1 install luadbi-postgresql
+    creates={{ lua_lib_path }}/dbd/postgresql.so
+

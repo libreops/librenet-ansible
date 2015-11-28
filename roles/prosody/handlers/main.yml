@@ -1,0 +1,4 @@
+---
+# handlers file for prosody
+- name: restart prosody
+  service: name=prosody state=restarted

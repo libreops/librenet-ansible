@@ -18,3 +18,15 @@ firewalld_rules:
     state: enabled
     zone: public
     permanent: true
+  xmpp-server:
+    port: 5269
+    protocol: tcp
+    state: enabled
+    zone: public
+    permanent: true
+  xmpp-client:
+    port: 5222
+    protocol: tcp
+    state: enabled
+    zone: public
+    permanent: true

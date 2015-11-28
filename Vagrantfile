@@ -26,11 +26,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Ansible provisioner.
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "deploy.yml"
-    ansible.vault_password_file = "../vault-passwd.txt"
-    ansible.extra_vars = {
-      sitename: "diaspora.dev"
-    }
-  end
+  #config.vm.provision "ansible" do |ansible|
+  #  ansible.playbook = "deploy.yml"
+  #  ansible.vault_password_file = "vault-passwd.txt"
+  #  ansible.extra_vars = {
+  #    sitename: "diaspora.dev"
+  #  }
+  #end
 end
