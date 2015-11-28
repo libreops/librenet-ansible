@@ -9,3 +9,5 @@ ssl_key: "{{ cert_path }}/ssl.key"
 ssl_path: '/etc/ssl/librenet.gr'
 modules_path: "{{ prosody_path }}/modules"
 admins: "{{ PROSODY_ADMINS }}"
+
+lua_lib_path: '/usr/lib64/lua/5.1'

@@ -79,9 +79,9 @@ log = {
     -- info = "prosody.log"; -- Change 'info' to 'debug' for verbose logging
     -- error = "prosody.err";
     -- info = "/var/log/prosody/prosody.log";
-    -- debug = "/var/log/prosody/prosody.log";
-    -- error = "/var/log/prosody/prosody.err";
-    "*syslog"; -- Uncomment this for logging to syslog
+    debug = "/var/log/prosody/prosody.log";
+    error = "/var/log/prosody/prosody.err";
+    -- "*syslog"; -- Uncomment this for logging to syslog
     -- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
@@ -91,11 +91,10 @@ pidfile = "/var/run/prosody/prosody.pid"
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "localhost"
 VirtualHost "{{ vhost }}"
   authentication = "diaspora"
   -- Adjust username and password for PostgreSQL
-  auth_diaspora = { driver = "PostgreSQL", database = "{{ database.name }}", username = "{{ database.user }}", password = "{{ database.password }}", host = "localhost" }
+  auth_diaspora = { driver = "PostgreSQL", database = "diaspora_production", username = "prosody", password = "{{ PG_PROSODY_PASSWORD }}", host = "/var/run/postgresql" }
   modules_enabled = {
     "diaspora_contacts";
   };

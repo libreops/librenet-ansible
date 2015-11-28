@@ -3,7 +3,6 @@
   yum:
     name: "{{ item }}"
     state: present
-    update_cache: yes
   with_items:
     - postgresql-server
     - postgresql-devel
@@ -15,18 +14,26 @@
 - name: Start and enable database
   service: name=postgresql state=started enabled=yes
 
-- name: Create Database User
+- name: Create Diaspora User
   become_user: postgres
   postgresql_user:
-    user: "{{ database.user }}"
-    password: "{{ database.password }}"
+    name: diaspora
+    password: "{{ pg_diaspora_password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
 
-- name: Create Database.
+- name: Create Prosody User
+  become_user: postgres
+  postgresql_user:
+    name: prosody
+    password: "{{ pg_prosody_password }}"
+    db: diaspora_production
+    priv: CONNECT/users:SELECT
+
+- name: Create Diaspora Database.
   become_user: postgres
   postgresql_db:
-    name: "{{ database.name }}"
-    owner: "{{ database.user }}"
+    name: diaspora_production
+    owner: diaspora
 
 - name: Copy pg_hba.conf
   template:

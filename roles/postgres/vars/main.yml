@@ -1,4 +1,2 @@
-database:
-  name: diaspora_production
-  user: diaspora
-  password: "{{ POSTGRES_USER_PASSWORD }}"
+pg_diaspora_password: "{{ PG_DIASPORA_PASSWORD }}"
+pg_prosody_password:  "{{ PG_PROSODY_PASSWORD }}"

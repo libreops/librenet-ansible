@@ -9,17 +9,13 @@
   with_items:
     - lua
     - lua-devel
-    - lua-dbi
     - https://comzeradd.fedorapeople.org/bcrypt-1.1-12.el7.centos.x86_64.rpm
     - https://comzeradd.fedorapeople.org/luarocks-2.2.2-2.el7.centos.noarch.rpm
   tags:
     - yum
     - pkg
 
-- name: Install lua-bcrypt using luarocks
-  command: >
-    luarocks-5.1 install bcrypt
-    creates=/usr/lib/lua/5.1/bcrypt.so
+- include: luarocks.yml
 
 - name: Create modules directory
   file:
