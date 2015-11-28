@@ -27,6 +27,7 @@
     - libxslt-devel
     - postfix
     - ed
+    - bash-completion
   tags:
     - yum
     - pkg

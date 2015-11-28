@@ -13,8 +13,10 @@ mysql: &mysql
 
 postgres: &postgres
   adapter: postgresql
-  socket: /var/run/postgresql
+  host: 127.0.0.1
+  port: 5432
   username: 'diaspora'
+  password: {{ PG_DIASPORA_PASSWORD }}
   encoding: unicode
 
 # Comment the the mysql line and uncomment the postgres line

@@ -1,0 +1,13 @@
+---
+# vars file for prosody
+
+vhost: 'librenet.gr'
+prosody_path: '/etc/prosody'
+cert_path: "{{ prosody_path }}/certs"
+ssl_cert: "{{ cert_path }}/ssl.crt"
+ssl_key: "{{ cert_path }}/ssl.key"
+ssl_path: '/etc/ssl/librenet.gr'
+modules_path: "{{ prosody_path }}/modules"
+admins: "{{ PROSODY_ADMINS }}"
+
+lua_lib_path: '/usr/lib64/lua/5.1'

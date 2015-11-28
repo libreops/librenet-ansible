@@ -1,0 +1,88 @@
+---
+- name: Install prosody
+  yum: name=prosody state=present
+
+- name: Install system dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - lua
+    - lua-devel
+    - https://comzeradd.fedorapeople.org/bcrypt-1.1-12.el7.centos.x86_64.rpm
+    - https://comzeradd.fedorapeople.org/luarocks-2.2.2-2.el7.centos.noarch.rpm
+  tags:
+    - yum
+    - pkg
+
+- include: luarocks.yml
+
+- name: Create modules directory
+  file:
+    path: /etc/prosody/modules/
+    state: directory
+    owner: root
+    group: prosody
+    mode: 0750
+
+- name: Get community modules
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: prosody
+    mode: 0640
+  with_items:
+    - {
+      src: "mod_auth_diaspora.lua",
+      dest: "{{ modules_path }}/mod_auth_diaspora.lua"
+      }
+    - {
+      src: "mod_diaspora_contacts.lua",
+      dest: "{{ modules_path }}/mod_diaspora_contacts.lua"
+      }
+    - {
+      src: "mod_carbons.lua",
+      dest: "{{ modules_path }}/mod_carbons.lua"
+      }
+    - {
+      src: "mod_smacks.lua",
+      dest: "{{ modules_path }}/mod_smacks.lua"
+      }
+
+- name: Copy SSL certs
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    remote_src: true
+    owner: prosody
+    group: prosody
+    mode: 0400
+  with_items:
+    - {
+      src: "{{ ssl_path }}/ssl.crt",
+      dest: "{{ cert_path }}/ssl.crt"
+      }
+    - {
+      src: "{{ ssl_path }}/ssl.key",
+      dest: "{{ cert_path }}/ssl.key"
+      }
+
+- name: Create dhparam.pem if not exists
+  command: >
+    openssl dhparam -out {{ cert_path }}/dhparam.pem 2048
+    creates={{ cert_path }}/dhparam.pem
+  tags:
+    - ssl
+
+- name: Copy configuration file
+  template:
+    src: "prosody.cfg.lua.j2"
+    dest: "/etc/prosody/prosody.cfg.lua"
+    owner: root
+    group: prosody
+    mode: 0640
+  notify: restart prosody
+
+- name: Enable prosody service
+  service: name=prosody state=started enabled=yes
