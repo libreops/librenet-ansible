@@ -1,6 +1,6 @@
 ---
 - hosts: librenet.gr
-  sudo: yes
+  become: true
   gather_facts: true
   vars:
     backup_path: "/var/backup"

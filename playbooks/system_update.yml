@@ -2,7 +2,7 @@
 
 - name: Update system
   hosts: all
-  sudo: yes
+  become: true
   gather_facts: false
 
   vars_prompt:
