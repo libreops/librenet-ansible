@@ -24,7 +24,7 @@ monit_syslog: ''
 # https://mmonit.com/monit/documentation/#setting_an_event_filter
 # You can disable alerting completely by providing an empty list.
 monit_mail_alert_to:
-  - { email: 'team@librenet.gr', only_on: '' }
+  - { email: 'team@librenet.gr', only_on: 'timeout nonexist' }
 
 # Supply a list of mail servers, the first item in the list will be tried first.
 monit_mail_servers:
@@ -74,7 +74,7 @@ monit_process_list:
 
   - pid: ''
     process: 'redis'
-    regex: 'redis'
+    regex: 'redis-server'
 
   - pid: ''
     process: 'camo'
