@@ -95,6 +95,8 @@ monit_process_list:
     script: |
       if totalmem is greater than 1024 MB for 2 cycles then restart
 
+  - pid: 'prosody/prosody.pid'
+
 # The same as process list except scoped to a specific host or group.
 monit_process_group_list: []
 monit_process_host_list: []
