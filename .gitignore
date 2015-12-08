@@ -4,6 +4,7 @@ vault-passwd.txt
 *private*
 *crt
 *key
+*pem
 downloads/
 *.swp
 .vagrant/
