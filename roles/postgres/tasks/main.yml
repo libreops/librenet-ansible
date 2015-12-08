@@ -43,3 +43,11 @@
     group: postgres
     mode: 0600
   notify: restart postgresql
+
+- name: Copy .pgpass
+  template:
+    src: pgpass.j2
+    dest: /home/diaspora/.pgpass
+    owner: diaspora
+    group: diaspora
+    mode: 0600

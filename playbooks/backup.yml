@@ -14,6 +14,17 @@
         - /var/backup/latest
       register: bin_path
 
+    - name: Create diaspora backup dir
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: yes
+        owner: diaspora
+        group: diaspora
+        mode: 0755
+      with_items:
+        - /var/backup/diaspora
+
     - name: Copy backup script
       copy: >
         src=../scripts/backup.sh

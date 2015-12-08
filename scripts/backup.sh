@@ -2,7 +2,7 @@
 set -e
 
 DATE=$(date +%F-%s)
-DEST="/var/backup"
+DEST="/var/backup/diaspora"
 LOGFILE="${DEST}/backup.log"
 TARFILE="${DEST}/diaspora-${DATE}.tar.gz"
 SQLFILE="${DEST}/diaspora-${DATE}.psql"
@@ -11,9 +11,9 @@ UPLOADSDIR="/var/www/diaspora/public/uploads"
 # Make sure backup dir exits
 [ ! -d "$DEST/latest" ] && mkdir -p "$DEST/latest"
 
-# Dump Diaspora's mysql database.
-# You must have /root/.my.cnf properly configured.
-sudo -u diaspora pg_dump diaspora_production -f $SQLFILE
+# Dump Diaspora's postgres database.
+# You must have /home/diaspora/.pgpass properly configured.
+sudo -u diaspora -H pg_dump diaspora_production -f $SQLFILE
 
 # Tar everything up and then gunzip it. If there is no uploads folder, just
 # include the database dump.
