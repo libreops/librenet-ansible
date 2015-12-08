@@ -12,7 +12,7 @@
       default: "no"
 
   tasks:
-    - command: /usr/bin/yum -y update
+    - yum: name=* state=latest update_cache=yes
       when: system_update == "yes"
 
 
