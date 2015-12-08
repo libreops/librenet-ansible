@@ -1,10 +1,10 @@
 ---
 #
 # Enable deploy page:
-#   ansible-playbook playbooks/deploy.yml -l librenet.gr -t enable
+#   ansible-playbook playbooks/deploy_page.yml -l librenet.gr -t enable
 #
 # Disable deploy page:
-#   ansible-playbook playbooks/deploy.yml -l librenet.gr -t disable
+#   ansible-playbook playbooks/deploy_page.yml -l librenet.gr -t disable
 #
 - hosts: all
   become: true
