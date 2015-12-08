@@ -1,3 +1,7 @@
 ---
-selinux_nginx_version: '1.4'
+selinux_nginx_version: '1.0'
 selinux_prosody_version: '1.0'
+
+selinux_modules:
+  - diaspora_nginx
+  - diaspora_prosody

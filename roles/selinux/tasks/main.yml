@@ -21,40 +21,32 @@
   command: "semanage port -a -t ssh_port_t -p tcp {{ FIREWALLD_SSH_PORT }}"
   when: seport|failed
 
-- name: Get latest installed version of policy module
-  shell: semodule -l | grep diaspora | awk '{ print $2 }'
-  register: installed_module_version
-  changed_when: false
-
-- name: Copy policy module
+- name: Copy SELinux policy modules
   template:
-    src: "{{ policy_mod_name }}.te.j2"
-    dest: /tmp/{{ policy_mod_name }}.te
-  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+    src: "{{ item }}.te.j2"
+    dest: /tmp/{{ item }}.te
+  with_items: selinux_modules
 
-- name: Create mod file
-  command: "checkmodule -M -m -o {{ policy_mod_name }}.mod {{ policy_mod_name }}.te"
+- name: Create mod files
+  command: "checkmodule -M -m -o {{ item }}.mod {{ item }}.te"
   args:
     chdir: /tmp/
-  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+  with_items: selinux_modules
 
-- name: Create compiled module
-  command: "semodule_package -o {{ policy_mod_name }}.pp -m {{ policy_mod_name }}.mod"
+- name: Create compiled modules
+  command: "semodule_package -o {{ item }}.pp -m {{ item }}.mod"
   args:
     chdir: /tmp/
-  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+  with_items: selinux_modules
 
-- name: Enable module
-  command: "semodule -i {{ policy_mod_name }}.pp"
+- name: Enable modules
+  command: "semodule -i {{ item }}.pp"
   args:
     chdir: /tmp/
-  when: installed_module_version.stdout != '{{ policy_mod_version }}'
+  with_items: selinux_modules
 
 - name: Remove generated modules
   file:
-    path: /tmp/{{ item }}
+    path: "/tmp/{{ item }}.*"
     state: absent
-  with_items:
-    - "{{ policy_mod_name }}.te"
-    - "{{ policy_mod_name }}.mod"
-    - "{{ policy_mod_name }}.pp"
+  with_items: selinux_modules
