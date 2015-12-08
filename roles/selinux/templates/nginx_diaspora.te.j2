@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-module {{ policy_mod_name }} {{ policy_mod_version }};
+module nginx_diaspora {{ selinux_nginx_version }};
 
 require {
         type transproxy_port_t;

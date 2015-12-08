@@ -1,3 +1,3 @@
 ---
-policy_mod_version: '1.3'
-policy_mod_name: 'nginx_diaspora'
+selinux_nginx_version: '1.4'
+selinux_prosody_version: '1.0'
