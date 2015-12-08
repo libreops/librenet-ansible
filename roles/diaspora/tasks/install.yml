@@ -21,6 +21,7 @@
     - bundler
     - git
     - database
+    - assets
 
 - name: Create bundle symlink to /usr/bin
   file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
@@ -161,6 +162,7 @@
     - bundler
     - update
     - database
+    - assets
 
 # Pick a table of Diaspora's schema db and check against it.
 # If the database is populated, the 'tags' table should exist.
@@ -205,7 +207,7 @@
   # Recompile assets
 - name: Recompile assets
   become_user: diaspora
-  shell: /usr/bin/bundle exec "rake assets:precompile"
+  shell: /usr/bin/bundle exec "rake tmp:cache:clear" && /usr/bin/bundle exec "rake assets:clean" && /usr/bin/bundle exec "rake assets:precompile"
   args:
     chdir: "{{ diaspora_dir }}"
   environment:
