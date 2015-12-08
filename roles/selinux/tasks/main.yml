@@ -39,8 +39,14 @@
     chdir: /tmp/
   with_items: selinux_modules
 
-- name: Enable modules
+- name: Install modules
   command: "semodule -i {{ item }}.pp"
+  args:
+    chdir: /tmp/
+  with_items: selinux_modules
+
+- name: Enable modules
+  command: "semodule -e {{ item }}"
   args:
     chdir: /tmp/
   with_items: selinux_modules
