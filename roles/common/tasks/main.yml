@@ -12,6 +12,7 @@
   yum: name={{ item }} state=present
   with_items:
     - yum-cron
+    - yum-utils
     - vim
     - ntp
     - tar
@@ -28,6 +29,15 @@
     - postfix
     - ed
     - bash-completion
+  tags:
+    - yum
+    - pkg
+
+- name: Limit number of installed kernels
+  lineinfile:
+    dest: /etc/yum.conf
+    line: 'installonly_limit=2'
+    regexp: '^installonly'
   tags:
     - yum
     - pkg
