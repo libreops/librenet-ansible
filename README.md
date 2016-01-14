@@ -291,6 +291,42 @@ There is some minimal testing done. You can run `./bin/ansible-test` locally
 and it will test the syntax of `deploy.yml` and all its tasks. Travis is setup
 to also test the syntax.
 
+# Deploying new Diaspora versions
+
+In order to deploy a new version, our Diaspora fork should first be updated.
+
+Clone our fork and set a remote to Diaspora upstream:
+
+```bash
+git clone git@github.com:librenet/librenet.gr.git
+git remote add upstream https://github.com/diaspora/diaspora.git
+```
+
+Create local branches of Diaspora's `stable` and `master` branches:
+
+```bash
+git branch master upstream/master
+git branch stable upstream/stable
+```
+
+Our base branch is `librenet`. The workflow to update `librenet` with latest
+`master` or `stable` is:
+
+1. Checkout the `master` branch: `git checkout master`
+1. Pull changes from upstream: `git pull upstream master`
+1. Checkout the `librenet` branch: `git checkout librenet`
+1. Merge `master` in `librenet`: `git merge master`
+1. Resolve any conflicts
+1. Add unstaged files: `git add .`
+1. Run `git commit` and let Git do its magic
+1. Push back to our fork: `git push origin librenet`
+
+After our fork on GitHub is up to date with latest `master`, run the playbook:
+
+```bash
+ansible-playbook deploy.yml -t diaspora -l librenet.gr
+```
+
 # Vagrant
 
 For testing purposes, a Vagrantfile is provided, so that a staging environment
