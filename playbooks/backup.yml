@@ -3,7 +3,7 @@
   become: true
   gather_facts: true
   vars:
-    backup_path: "/var/backup"
+    backup_path: "/var/backup/diaspora"
     downloads_path: "../downloads/{{ ansible_hostname }}/"
 
   tasks:
@@ -16,14 +16,12 @@
 
     - name: Create diaspora backup dir
       file:
-        path: "{{ item }}"
+        path: "{{ backup_path }}"
         state: directory
         recurse: yes
         owner: diaspora
         group: diaspora
         mode: 0755
-      with_items:
-        - /var/backup/diaspora
 
     - name: Copy backup script
       copy: >
