@@ -14,7 +14,7 @@
         - diaspora
 
     - name: status unicorn
-      command: systemctl status diaspora-unicorn.service
+      command: systemctl status unicorn.service
       register: unicorn_status
       failed_when:  unicorn_status.rc != 0
       changed_when: false
@@ -24,7 +24,7 @@
         - diaspora
 
     - name: status sidekiq
-      command: systemctl status diaspora-sidekiq.service
+      command: systemctl status sidekiq.service
       register: sidekiq_status
       failed_when:  sidekiq_status.rc != 0
       changed_when: false
@@ -43,12 +43,30 @@
         - redis
         - diaspora
 
-    - name: status mariadb
-      command: systemctl status mariadb.service
-      register: mariadb_status
-      failed_when:  mariadb_status.rc != 0
+    - name: status postgres
+      command: systemctl status postgresql.service
+      register: postgres_status
+      failed_when:  postgres_status.rc != 0
       changed_when: false
       ignore_errors: true
       tags:
-        - mariadb
+        - postgres
         - mysql
+
+    - name: status prosody
+      command: systemctl status prosody.service
+      register: prosody_status
+      failed_when:  prosody_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - prosody
+
+    - name: status camo
+      command: systemctl status camo.service
+      register: camo_status
+      failed_when:  camo_status.rc != 0
+      changed_when: false
+      ignore_errors: true
+      tags:
+        - camo

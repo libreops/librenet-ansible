@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: librenet.gr
   become: true
   gather_facts: false
   tasks:
@@ -29,13 +29,23 @@
         - redis
         - diaspora
 
-    - name: Restart mariadb
-      service: name=mariadb state=restarted
+    - name: Restart postgres
+      service: name=postgresql state=restarted
       tags:
-        - mariadb
+        - postgres
         - mysql
 
     - name: Restart ssh
       service: name=ssh state=restarted
       tags:
         - ssh
+
+    - name: Restart prosody
+      service: name=prosody state=restarted
+      tags:
+        - prosody
+
+    - name: Restart camo
+      service: name=camo state=restarted
+      tags:
+        - camo
