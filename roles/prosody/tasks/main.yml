@@ -83,6 +83,8 @@
     group: prosody
     mode: 0640
   notify: restart prosody
+  tags:
+    - prosodyconf
 
 - name: Enable prosody service
   service: name=prosody state=started enabled=yes
