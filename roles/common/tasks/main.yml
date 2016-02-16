@@ -29,6 +29,7 @@
     - postfix
     - ed
     - bash-completion
+    - ncdu
   tags:
     - yum
     - pkg
