@@ -94,6 +94,8 @@ monit_process_list:
   - pid: 'diaspora/sidekiq.pid'
 
   - pid: 'prosody/prosody.pid'
+    script: |
+      depends on postgres
 
 # The same as process list except scoped to a specific host or group.
 monit_process_group_list: []
