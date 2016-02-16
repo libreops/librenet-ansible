@@ -92,8 +92,6 @@ monit_process_list:
   - pid: 'diaspora/unicorn.pid'
 
   - pid: 'diaspora/sidekiq.pid'
-    script: |
-      if totalmem is greater than 1024 MB for 2 cycles then restart
 
   - pid: 'prosody/prosody.pid'
 
