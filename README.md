@@ -23,6 +23,7 @@
     - [Config only changes](#config-only-changes)
     - [Assets only changes](#assets-only-changes)
 - [Testing](#testing)
+- [Deploying new Diaspora versions](#deploying-new-diaspora-versions)
 - [Vagrant](#vagrant)
   - [Requirements](#requirements)
   - [Run](#run)
