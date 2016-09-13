@@ -1,0 +1,6 @@
+---
+# https://github.com/diaspora/diaspora/issues/6828
+- name: Copy ImageMagick xml policy
+  template:
+    src: policy.xml.j2
+    dest: "/etc/ImageMagick/policy.xml"
