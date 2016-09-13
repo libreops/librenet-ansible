@@ -18,6 +18,7 @@
     - { role: selinux, tags: ['selinux'] }
     - { role: nginx, tags: ['nginx'] }
     - { role: prosody, tags: ['prosody'] }
+    - { role: imagemagick, tags: ['imagemagick', 'captcha'] }
 
 # Enable services on boot.
 - include: ./playbooks/services_enable.yml
