@@ -188,7 +188,7 @@ configuration: ## Section
 
     ## Number of Unicorn worker processes (default=2).
     ## Increase this if you have many users.
-    #unicorn_worker: 2
+    unicorn_worker: {{ unicorn_workers }}
 
     ## Number of seconds before a request is aborted (default=90).
     ## Increase if you get empty responses, or if large image uploads fail.

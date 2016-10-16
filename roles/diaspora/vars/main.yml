@@ -3,6 +3,7 @@
 git_repo_url: https://github.com/librenet/librenet.gr.git
 git_branch: librenet
 sidekiq_workers: 25
+unicorn_workers: 4
 
 camo_key: "{{ CAMO_KEY }}"
 
