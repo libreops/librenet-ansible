@@ -9,9 +9,6 @@ camo_key: "{{ CAMO_KEY }}"
 
 newrelic_key: "{{ DIASPORA_NEWRELIC_KEY }}"
 
-piwik_host: "{{ DIASPORA_PIWIK_HOST }}"
-piwik_id: "{{ DIASPORA_PIWIK_ID }}"
-
 twitter_key: "{{ DIASPORA_TWITTER_KEY }}"
 twitter_secret: "{{ DIASPORA_TWITTER_SECRET }}"
 
