@@ -17,7 +17,7 @@
     - { role: firewalld, tags: ['firewall'] }
     - { role: selinux, tags: ['selinux'] }
     - { role: nginx, tags: ['nginx'] }
-    - { role: prosody, tags: ['prosody'] }
+    #- { role: prosody, tags: ['prosody'] }
     - { role: imagemagick, tags: ['imagemagick', 'captcha'] }
 
 # Enable services on boot.

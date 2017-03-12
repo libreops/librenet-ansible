@@ -21,13 +21,13 @@
     password: "{{ pg_diaspora_password }}"
     role_attr_flags: CREATEDB,NOSUPERUSER
 
-- name: Create Prosody User
-  become_user: postgres
-  postgresql_user:
-    name: prosody
-    password: "{{ pg_prosody_password }}"
-    db: diaspora_production
-    priv: CONNECT/users:SELECT
+    #- name: Create Prosody User
+    #  become_user: postgres
+    #  postgresql_user:
+    #    name: prosody
+    #    password: "{{ pg_prosody_password }}"
+    #    db: diaspora_production
+    #    priv: CONNECT/users:SELECT
 
 - name: Create Diaspora Database.
   become_user: postgres
