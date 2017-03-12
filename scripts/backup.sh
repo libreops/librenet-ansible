@@ -29,4 +29,4 @@ echo -e "$(du -sh $TARFILE)\t$(md5sum $TARFILE | awk '{print $1}')" >> $LOGFILE
 rm -rf ${DEST}/latest/*tar.gz
 
 # Copy tar backup to `latest/` dir. Hack to download latest backup via ansible.
-#cp $TARFILE ${DEST}/latest/
+mv $TARFILE ${DEST}/latest/
