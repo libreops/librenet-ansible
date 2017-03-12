@@ -50,6 +50,7 @@
     git ls-remote {{ git_repo_url }} HEAD | awk '{print $1}'
   register: remote_sha
   changed_when: false
+  ignore_errors: yes
   tags:
     - git
 
@@ -116,10 +117,9 @@
     - yaml
     - postgres
 
-- name: Insert pid in sidekiq.yml
-  lineinfile: >
-    insertafter="^:verbose: false$"
-    line=":pidfile: /var/run/diaspora/sidekiq.pid"
+- name: Copy sidekiq.yml
+  template: >
+    src=sidekiq.yml.j2
     dest="{{ diaspora_dir }}/config/sidekiq.yml"
     owner=diaspora
     group=diaspora
