@@ -8,3 +8,4 @@ vault-passwd.txt
 downloads/
 *.swp
 .vagrant/
+*.retry
