@@ -14,7 +14,7 @@ PROSODYDIR="/var/lib/prosody"
 
 # Dump Diaspora's postgres database.
 # You must have /home/diaspora/.pgpass properly configured.
-sudo -u diaspora -H pg_dump diaspora_production -f $SQLFILE
+sudo -u diaspora -H pg_dump -Fc diaspora_production -f $SQLFILE
 
 # Tar everything up and then gunzip it.
 tar zcf $TARFILE $UPLOADSDIR $PROSODYDIR $SQLFILE
