@@ -6,15 +6,13 @@
     - wget
     - ImageMagick-devel
     - nodejs
-    - ruby
-    - ruby-devel
     - libxslt-devel
     - libxml2-devel
     - gcc
     - patch
 
 - name: Install bundler
-  gem: name=bundler state=present user_install=no
+  gem: name=bundler state=latest user_install=no
   register: bundler
   tags:
     - gem
@@ -22,12 +20,7 @@
     - git
     - database
     - assets
-
-- name: Create bundle symlink to /usr/bin
-  file: src=/usr/local/bin/bundle dest=/usr/bin/bundle state=link
-  tags:
-    - bundler
-    - git
+    - diaspora
 
 - name: Create repo directory
   file: >
@@ -53,6 +46,7 @@
   ignore_errors: yes
   tags:
     - git
+    - diaspora
 
 - name: Get last local commit sha
   shell: >
@@ -63,6 +57,7 @@
   ignore_errors: yes
   tags:
     - git
+    - diaspora
 
 - name: Git checkout librenet branch
   become_user: diaspora
@@ -70,7 +65,7 @@
     repo: "{{ git_repo_url }}"
     version: "{{ git_branch }}"
     dest: "{{ diaspora_dir }}"
-    remote: "{{ git_branch }}"
+    remote: "{{ git_remote }}"
     accept_hostkey: yes
     force: yes
   when: (remote_sha.stdout != local_sha.stdout or local_sha.stdout == "")
@@ -78,9 +73,10 @@
   tags:
     - git
     - deploy
+    - diaspora
 
 - name: stat Gemfile.lock
-  stat: path=/var/www/diaspora/diaspora/Gemfile.lock
+  stat: path={{ diaspora_dir }}/Gemfile.lock
   register: gemfile_lock
 
 - name: Copy diaspora.yml
@@ -99,6 +95,7 @@
     - yaml
     - unicorn
     - sidekiq
+    - diaspora
 
 - name: Copy database.yml
   template: >
@@ -116,6 +113,7 @@
     - database
     - yaml
     - postgres
+    - diaspora
 
 - name: Copy sidekiq.yml
   template: >
@@ -147,22 +145,37 @@
     - newrelic
     - yaml
 
+- name: Copy .bundle/config
+  template: >
+    src=bundle.config.j2
+    dest="{{ diaspora_dir }}/.bundle/config"
+    owner=diaspora
+    group=diaspora
+    mode=0644
+  register: bundle_config
+  notify:
+    - restart unicorn
+  tags:
+    - diaspora
+    - config
+    - bundler
+
 - name: Install gem dependencies
   become_user: diaspora
-  shell: /usr/bin/bundle install --without test development --no-deployment --path vendor/bundle
+  shell: ./bin/bundle install
   args:
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-    DB: postgres
   register: bundle_install
-  when: bundler|success
+  when: bundler|succeeded and bundle_config|succeeded
   tags:
     - gem
     - bundler
     - update
     - database
     - assets
+    - diaspora
 
 # Pick a table of Diaspora's schema db and check against it.
 # If the database is populated, the 'tags' table should exist.
@@ -179,12 +192,11 @@
 
 - name: Initial Seed of database (destructive, runs only the first time)
   become_user: diaspora
-  shell: /usr/bin/bundle exec "rake db:create db:schema:load"
+  shell: ./bin/bundle exec "rake db:create db:schema:load"
   args:
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-    DB: postgres
   when: check_db.stdout == "(0 rows)"
   tags:
     - database
@@ -192,30 +204,30 @@
 
 - name: Migrate database
   become_user: diaspora
-  shell: /usr/bin/bundle exec "rake db:migrate"
+  shell: ./bin/bundle exec "rake db:migrate"
   args:
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-    DB: postgres
-  when: bundle_install|success
+  when: bundle_install|succeeded
   tags:
     - update
     - database
     - migration
+    - diaspora
 
-  # Recompile assets
+# Recompile assets
 - name: Recompile assets
   become_user: diaspora
-  shell: /usr/bin/bundle exec "rake tmp:cache:clear" && /usr/bin/bundle exec "rake assets:clean" && /usr/bin/bundle exec "rake assets:precompile"
+  shell: ./bin/bundle exec "rake tmp:cache:clear" && ./bin/bundle exec "rake assets:clean" && ./bin/bundle exec "rake assets:precompile"
   args:
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-    DB: postgres
-  when: bundle_install|success
+  when: bundle_install|succeeded
   notify:
     - restart unicorn
   tags:
     - update
     - assets
+    - diaspora

@@ -2,8 +2,9 @@
 # vars file for diaspora
 git_repo_url: https://github.com/librenet/librenet.gr.git
 git_branch: librenet
+git_remote: origin
 sidekiq_workers: 25
-unicorn_workers: 4
+unicorn_workers: 2
 
 camo_key: "{{ CAMO_KEY }}"
 

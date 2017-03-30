@@ -130,7 +130,7 @@ playbook                | description
 
 The main playbook that is responsible for all the roles.
 
-It deploys a diaspora pod with mariadb/mysql on a CentOS7 server.
+It deploys a diaspora pod with PostgreSQL on a CentOS 7 server.
 
 Run with:
 ```
@@ -138,6 +138,7 @@ ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt
 ```
 
 Supported tags:
+
 ```
 - diaspora
 - config
@@ -151,7 +152,6 @@ Supported tags:
 - pkg
 - epel
 - database
-- mycnf
 ```
 
 ### check_updates.yml
@@ -188,6 +188,7 @@ ansible-playbook -i hosts playbooks/fetch_logs.yml
 Restart main services.
 
 Supported tags:
+
 ```
 unicorn
 sidekiq
@@ -209,19 +210,25 @@ the `diaspora` tag.
 
 Check the status of various services.
 
-Supported services: `unicorn`, `sidekiq`, `mariadb`, `redis`.
+Supported services: `nginx`, `unicorn`, `sidekiq`, `postgres`, `redis`, `prosody`,
+`camo`.
 
 Supported tags:
+
 ```
+- nginx
 - diaspora
 - unicorn
 - sidekiq
 - redis
-- mariadb
-- mysql
+- postgres
+- database
+- prosody
+- camo
 ```
 
 Run with:
+
 ```
 ansible-playbook -i hosts playbooks/services_status.yml
 ```
@@ -273,6 +280,7 @@ ansible-playbook -i hosts deploy.yml --tags=nginx
 ### Config only changes
 
 If you changed something in `diaspora.yml` run the playbook with:
+
 ```
 ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt -t config
 ```
@@ -280,6 +288,7 @@ ansible-playbook -i hosts deploy.yml --vault-password-file vault-passwd.txt -t c
 ### Assets only changes
 
 If you change/add anything under `app/assets`, run the playbook with:
+
 ```
 ansible-playbook -i hosts deploy.yml -t assets
 ```
@@ -296,7 +305,7 @@ to also test the syntax.
 
 In order to deploy a new version, our Diaspora fork should first be updated.
 
-Clone our fork and set a remote to Diaspora upstream:
+Locally, clone our fork and set a remote to Diaspora upstream:
 
 ```bash
 git clone git@github.com:librenet/librenet.gr.git
