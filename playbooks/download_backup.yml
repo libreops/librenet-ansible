@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: librenet.gr
   vars:
     latest_backup_path: "/var/backup/latest"
     downloads_path: "../downloads/{{ ansible_hostname }}/"

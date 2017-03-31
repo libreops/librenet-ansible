@@ -14,7 +14,7 @@ PROSODYDIR="/var/lib/prosody"
 
 # Dump Diaspora's postgres database.
 # You must have /home/diaspora/.pgpass properly configured.
-sudo -u diaspora -H pg_dump diaspora_production -f $SQLFILE
+sudo -u diaspora -H pg_dump -Fc diaspora_production -f $SQLFILE
 
 # Tar everything up and then gunzip it.
 tar zcf $TARFILE $UPLOADSDIR $PROSODYDIR $SQLFILE
@@ -29,4 +29,4 @@ echo -e "$(du -sh $TARFILE)\t$(md5sum $TARFILE | awk '{print $1}')" >> $LOGFILE
 rm -rf ${DEST}/latest/*tar.gz
 
 # Copy tar backup to `latest/` dir. Hack to download latest backup via ansible.
-#cp $TARFILE ${DEST}/latest/
+mv $TARFILE ${DEST}/latest/
