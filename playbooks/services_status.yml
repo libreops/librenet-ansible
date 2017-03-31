@@ -51,7 +51,7 @@
       ignore_errors: true
       tags:
         - postgres
-        - mysql
+        - database
 
     - name: status prosody
       command: systemctl status prosody.service
