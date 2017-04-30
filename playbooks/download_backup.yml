@@ -1,7 +1,7 @@
 ---
 - hosts: librenet.gr
   vars:
-    latest_backup_path: "/var/backup/latest"
+    latest_backup_path: "/var/backup/diaspora/latest"
     downloads_path: "../downloads/{{ ansible_hostname }}/"
 
   tasks:
