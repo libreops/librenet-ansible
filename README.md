@@ -322,10 +322,9 @@ git branch stable upstream/stable
 Our base branch is `librenet`. The workflow to update `librenet` with latest
 `master` or `stable` is:
 
-1. Checkout the `master` branch: `git checkout master`
-1. Pull changes from upstream: `git pull upstream master`
 1. Checkout the `librenet` branch: `git checkout librenet`
-1. Merge `master` in `librenet`: `git merge master`
+1. Fetch the upstream master branch: `git fetch upstream master`
+1. Merge `upstream/master` in `librenet`: `git merge upstream/master`
 1. Resolve any conflicts
 1. Add unstaged files: `git add .`
 1. Run `git commit` and let Git do its magic
