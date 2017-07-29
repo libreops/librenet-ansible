@@ -11,7 +11,7 @@
       file: path={{ item }} state=directory recurse=yes
       with_items:
         - /root/bin
-        - /var/backup/latest
+        - /var/backup/diaspora/latest
       register: bin_path
 
     - name: Create diaspora backup dir
