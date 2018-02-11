@@ -1,0 +1,10 @@
+---
+# vars file for backups
+
+account: "{{ BB2_ACCOUNT }}"
+key: "{{ BB2_KEY }}"
+bucket: "{{ BB2_BUCKET }}"
+passphrase: "{{ BB2_PASSPHRASE }}"
+
+backup_path: "/var/backup/diaspora"
+downloads_path: "../Downloads/{{ ansible_hostname }}/"
