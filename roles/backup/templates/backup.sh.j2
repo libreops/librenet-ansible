@@ -21,21 +21,15 @@ PROSODYDIR="/var/lib/prosody"
 
 # Dump Diaspora's postgres database.
 # You must have /home/diaspora/.pgpass properly configured.
-sudo -u diaspora -H pg_dump -Fc diaspora_production -f ${SQLFILE}/psql
-sudo -u diaspora -H pg_dump -Fc diaspora_production -f ${SQLFILE}/uploads
-sudo -u diaspora -H pg_dump -Fc diaspora_production -f ${SQLFILE}/prosody
+sudo -u diaspora -H pg_dump -Fc diaspora_production -f ${SQLFILE}
 
 # Backblaze backup
 # Remove files older than 90 days from Backblaze
 duplicity remove-older-than 90D --force b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
 # Sync everything to Backblaze
-duplicity ${SQLFILE} b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/psql
-duplicity ${UPLOADSDIR} b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/uploads
-duplicity ${PROSODYDIR} b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/prosody
+duplicity --include=${SQLFILE} --include=${UPLOADSDIR} --include=${PROSODYDIR} --exclude='**' / b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
 # Cleanup failures
-duplicity cleanup --force b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/${B2_DIR}/psql
-duplicity cleanup --force b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/${B2_DIR}/uploads
-duplicity cleanup --force b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}/${B2_DIR}/prosody
+duplicity cleanup --force b2://${B2_ACCOUNT}:${B2_KEY}@${B2_BUCKET}
 
 # Local backup
 # Tar everything up and then gunzip it.
