@@ -30,6 +30,7 @@
     - ed
     - bash-completion
     - ncdu
+    - python2-pip
   tags:
     - yum
     - pkg

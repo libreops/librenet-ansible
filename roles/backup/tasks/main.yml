@@ -1,4 +1,10 @@
 ---
+- name: Install duplicity
+  yum: name=duplicity state=present
+
+- name: Install b2 python module
+  pip: name=b2
+
 - name: Make sure needed directories exist
   file: path={{ item }} state=directory recurse=yes
   with_items:
