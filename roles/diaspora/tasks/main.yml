@@ -1,4 +1,4 @@
 ---
-- include: install.yml
-- include: systemd.yml
 
+- import_tasks: install.yml
+- import_tasks: systemd.yml
