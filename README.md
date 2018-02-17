@@ -118,7 +118,6 @@ The table below summarizes their purposes.
 playbook                | description
 ----------------------- | -----------
 `deploy.yml`            | the main playbook which deploys diaspora with its various components
-`backup.yml`            | backups diaspora mysql database and the `uploads/` dir by running the backup script
 `check_updates.yml`     | checks for system updates without updating
 `fetch_logs.yml`        | fetches logs for inspection
 `maintenance.yml`       | calls `check_updates.yml`, `system_update.yml` and `services_restart.yml` in that order
@@ -152,6 +151,7 @@ Supported tags:
 - pkg
 - epel
 - database
+- backup
 ```
 
 ### check_updates.yml
@@ -308,29 +308,54 @@ In order to deploy a new version, our Diaspora fork should first be updated.
 Locally, clone our fork and set a remote to Diaspora upstream:
 
 ```bash
-git clone git@github.com:librenet/librenet.gr.git
+git clone git@gitlab.com:hsgr/webops/librenet.gr.git
 git remote add upstream https://github.com/diaspora/diaspora.git
 ```
 
-Create local branches of Diaspora's `stable` and `master` branches:
+Diaspora's `master` branch always points to the latest stable release, so we'll
+use that to update our fork.
 
-```bash
-git branch master upstream/master
-git branch stable upstream/stable
-```
+Our base branch which contains all custom changes, is `librenet`. The workflow
+to update `librenet` with latest `master` from upstream is:
 
-Our base branch is `librenet`. The workflow to update `librenet` with latest
-`master` or `stable` is:
+1. Checkout the `librenet` branch:
 
-1. Checkout the `librenet` branch: `git checkout librenet`
-1. Fetch the upstream master branch: `git fetch upstream master`
-1. Merge `upstream/master` in `librenet`: `git merge upstream/master`
-1. Resolve any conflicts
-1. Add unstaged files: `git add .`
+    ```
+    git checkout librenet
+    ```
+
+1. Fetch the upstream master branch:
+
+    ```
+    git fetch upstream master
+    ```
+
+1. Merge `upstream/master` in `librenet`:
+
+    ```
+    git merge upstream/master
+    ```
+
+1. Resolve any conflicts, usually in `Gemfile.lock` in which we have added the
+   new_relic gem.
+1. Add unstaged files:
+
+    ```
+    git add file1 file2
+    ```
+
 1. Run `git commit` and let Git do its magic
-1. Push back to our fork: `git push origin librenet`
+1. Push back to our fork:
 
-After our fork on GitHub is up to date with latest `master`, run the playbook:
+    ```
+    git push origin librenet
+    ```
+
+Now it's time to read [Diaspora's changelog](https://github.com/diaspora/diaspora/blob/develop/Changelog.md)
+and check if there are any changes needed to any yaml files or any tasks need
+to run manually.
+
+To update librenet.gr with the new version, run the playbook:
 
 ```bash
 ansible-playbook deploy.yml -t diaspora -l librenet.gr
