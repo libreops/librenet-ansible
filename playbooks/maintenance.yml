@@ -1,5 +1,5 @@
 ---
 # Perform a system update and restart all the services.
-- include: check_updates.yml
-- include: system_update.yml
-- include: services_restart.yml
+- import_playbook: check_updates.yml
+- import_playbook: system_update.yml
+- import_playbook: services_restart.yml

@@ -1,5 +1,6 @@
 ---
+
 - include_vars: private.yml
 
-- include: install.yml
-- include: ssl.yml
+- import_tasks: install.yml
+- import_tasks: ssl.yml

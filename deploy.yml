@@ -22,4 +22,4 @@
     - { role: backup, tags: ['backup'] }
 
 # Enable services on boot.
-- include: ./playbooks/services_enable.yml
+- import_playbook: ./playbooks/services_enable.yml
