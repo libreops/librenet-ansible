@@ -32,8 +32,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-![Build Status](https://travis-ci.org/librenet/ansible.svg?branch=master)
-
 # Configuration Management of librenet.gr
 
 This repo contains various Ansible scripts that help with maintenance of
