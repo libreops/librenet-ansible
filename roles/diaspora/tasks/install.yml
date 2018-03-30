@@ -168,7 +168,7 @@
   environment:
     RAILS_ENV: production
   register: bundle_install
-  when: bundler|succeeded and bundle_config|succeeded
+  when: bundler is succeeded and bundle_config is succeeded
   tags:
     - gem
     - bundler
@@ -209,7 +209,7 @@
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-  when: bundle_install|succeeded
+  when: bundle_install is succeeded
   tags:
     - update
     - database
@@ -224,7 +224,7 @@
     chdir: "{{ diaspora_dir }}"
   environment:
     RAILS_ENV: production
-  when: bundle_install|succeeded
+  when: bundle_install is succeeded
   notify:
     - restart unicorn
   tags:
