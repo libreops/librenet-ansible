@@ -1,6 +1,6 @@
 ---
 # vars file for diaspora
-git_repo_url: https://gitlab.com/hsgr/webops/librenet.gr.git
+git_repo_url: https://gitlab.com/libreops/librenet.gr.git
 git_branch: librenet
 git_remote: origin
 sidekiq_workers: 25
