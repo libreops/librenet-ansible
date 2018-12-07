@@ -14,6 +14,7 @@ WorkingDirectory={{ diaspora_dir }}
 PIDFile={{ unicorn_pid }}
 Environment=RAILS_ENV=production
 Environment=DB=postgres
+Environment=LD_PRELOAD=/lib64/libjemalloc.so.1
 RuntimeDirectory=diaspora
 RuntimeDirectoryMode=775
 
