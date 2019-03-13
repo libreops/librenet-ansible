@@ -2,33 +2,35 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Configuration Management of librenet.gr](#configuration-management-of-librenetgr)
-  - [Conventions](#conventions)
-    - [Encrypted sensitive data](#encrypted-sensitive-data)
-      - [Running playbooks](#running-playbooks)
-      - [Add more variables](#add-more-variables)
-    - [Non standard ssh port](#non-standard-ssh-port)
-    - [Deploy user](#deploy-user)
-  - [Playbooks](#playbooks)
-    - [deploy.yml](#deployyml)
-    - [check_updates.yml](#check_updatesyml)
-    - [fetch_logs.yml](#fetch_logsyml)
-    - [services_restart.yml](#services_restartyml)
-    - [services_status.yml](#services_statusyml)
-    - [system_update.yml](#system_updateyml)
-    - [maintenance.yml](#maintenanceyml)
-  - [Specific runs](#specific-runs)
-    - [Run all](#run-all)
-    - [Nginx only changes](#nginx-only-changes)
-    - [Config only changes](#config-only-changes)
-    - [Assets only changes](#assets-only-changes)
+- [Configuration Management of librenet.gr](#configuration-management-of-librenet-gr)
+    - [Conventions](#conventions)
+        - [Encrypted sensitive data](#encrypted-sensitive-data)
+            - [Running playbooks](#running-playbooks)
+            - [Add more variables](#add-more-variables)
+        - [Non standard ssh port](#non-standard-ssh-port)
+        - [Deploy user](#deploy-user)
+    - [Playbooks](#playbooks)
+        - [deploy.yml](#deploy-yml)
+        - [check_updates.yml](#check_updates-yml)
+        - [fetch_logs.yml](#fetch_logs-yml)
+        - [services_restart.yml](#services_restart-yml)
+        - [services_status.yml](#services_status-yml)
+        - [system_update.yml](#system_update-yml)
+        - [maintenance.yml](#maintenance-yml)
+    - [Specific runs](#specific-runs)
+        - [Run all](#run-all)
+        - [Nginx only changes](#nginx-only-changes)
+        - [Config only changes](#config-only-changes)
+        - [Assets only changes](#assets-only-changes)
 - [Testing](#testing)
 - [Deploying new Diaspora versions](#deploying-new-diaspora-versions)
 - [Vagrant](#vagrant)
-  - [Requirements](#requirements)
-  - [Run](#run)
-  - [Configuration](#configuration)
-  - [Useful links](#useful-links)
+    - [Requirements](#requirements)
+    - [Run](#run)
+    - [Configuration](#configuration)
+    - [Useful links](#useful-links)
+    - [Troubleshooting](#troubleshooting)
+        - [Captcha not working](#captcha-not-working)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -427,6 +429,25 @@ Some useful vagrant links:
 
 - <https://docs.vagrantup.com/v2/provisioning/ansible.html>
 - <https://docs.vagrantup.com/v2/cli/index.html>
+
+## Troubleshooting
+
+Sometimes things don't go as expected.
+
+### Captcha not working
+
+Captcha relies on ImageMagick which some time ago had a serious CVE
+([CVE-2016–3714](https://www.imagemagick.org/discourse-server/viewtopic.php?f=4&t=29588)).
+Updates might change the policies defined in `/etc/ImageMagick/policy.xml`, so
+we patch it with our own.
+
+Fix it with:
+
+```sh
+ansible-playbook deploy.yml -t imagemagick -l librenet.gr
+```
+
+You can [follow the Diaspora issue](https://github.com/diaspora/diaspora/issues/6828).
 
 [vault]: http://docs.ansible.com/playbooks_vault.html "Ansible Vault"
 [private]: http://ansiblecookbook.com/html/en.html#how-do-i-store-private-data-in-git-for-ansible
