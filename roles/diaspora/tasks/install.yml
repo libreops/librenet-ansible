@@ -157,7 +157,7 @@
   environment:
     RAILS_ENV: production
   register: bundle_install
-  when: bundler is succeeded and bundle_config is succeeded
+  when: bundle_config is succeeded
   tags:
     - gem
     - bundler
