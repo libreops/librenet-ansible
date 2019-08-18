@@ -23,7 +23,7 @@ RuntimeDirectoryMode=775
 #WatchdogSec=20s
 #Restart=always
 
-ExecStart=/usr/bin/bundle exec "unicorn_rails -c config/unicorn.rb -E production"
+ExecStart=/var/www/diaspora/bin/bundle exec "unicorn -c config/unicorn.rb"
 
 [Install]
 WantedBy=multi-user.target
