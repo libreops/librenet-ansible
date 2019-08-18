@@ -34,7 +34,7 @@
 
 - name: Create unicorn pid directory
   file:
-    path: /var/run/diaspora/
+    path: /run/diaspora/
     state: directory
     owner: diaspora
     group: diaspora
@@ -45,7 +45,7 @@
 - name: Copy diaspora tmpfiles to persist directories
   template:
     src: diaspora.tmpfiles.d
-    dest: /usr/lib/tmpfiles.d/diaspora.conf
+    dest: /etc/tmpfiles.d/diaspora.conf
     owner: root
     group: root
     mode: 0644
