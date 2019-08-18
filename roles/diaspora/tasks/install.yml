@@ -11,17 +11,6 @@
     - gcc
     - patch
 
-- name: Install bundler
-  gem: name=bundler state=latest user_install=no
-  register: bundler
-  tags:
-    - gem
-    - bundler
-    - git
-    - database
-    - assets
-    - diaspora
-
 - name: Create repo directory
   file: >
     path=/var/www/diaspora
