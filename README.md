@@ -308,7 +308,7 @@ In order to deploy a new version, our Diaspora fork should first be updated.
 Locally, clone our fork and set a remote to Diaspora upstream:
 
 ```bash
-git clone git@gitlab.com:hsgr/webops/librenet.gr.git
+git clone git@gitlab.com:libreops/librenet-ansible.git
 git remote add upstream https://github.com/diaspora/diaspora.git
 ```
 
