@@ -24,7 +24,7 @@
 ## - Specify lists/arrays as comma-separated values
 ##
 ## - For example, on Heroku:
-##   heroku config:set SERVICES_FACEBOOK_APP_ID=yourappid SERVICES_FACEBOOK_SECRET=yourappsecret
+##   heroku config:set SERVICES_TWITTER_KEY=yourkey SERVICES_TWITTER_SECRET=yoursecret
 
 configuration: ## Section
 
@@ -220,7 +220,7 @@ configuration: ## Section
     ##
     ## Please make sure that you followed the Installation-Instructions first:
     ## https://wiki.diasporafoundation.org/Integration/Chat#Installation.2FUpdate
-    enabled: false
+    #enabled: true
 
     ## Custom XMPP server configuration goes here.
     server: ## Section
@@ -303,15 +303,15 @@ configuration: ## Section
     ## Piwik Tracking (disabled by default).
     ## Provide a site ID and the host piwik is running on to enable
     ## tracking through Piwik.
-    #piwik: ## Section
+    piwik: ## Section
 
       #enable: true
-      #host:
-      #site_id:
+      #host: 'stats.example.org'
+      #site_id: 1
 
     ## Statistics
     ## Your pod will report its name, software version and whether
-    ## or not registrations are open via /statistics.json.
+    ## or not registrations are open via /statistics and NodeInfo.
     ## Uncomment the options below to enable more statistics.
     statistics: ## Section
 
@@ -458,6 +458,11 @@ configuration: ## Section
     ## of your Sidekiq workers.
     #typhoeus_concurrency: 20
 
+    ## Maximum number of parallel user data export jobs (default=1)
+    ## Be careful, exports of big/old profiles can use a lot of memory, running
+    ## many of them in parallel can be a problem for small servers.
+    #export_concurrency: 1
+
     ## Captcha settings
     captcha: ## Section
 
@@ -580,20 +585,6 @@ configuration: ## Section
 
   ## Posting from Diaspora to external services (all are disabled by default).
   services: ## Section
-
-    ## OAuth credentials for Facebook
-    facebook: ## Section
-
-      #enable: true
-      #app_id: 'abcdef'
-      #secret: 'change_me'
-
-      ## This setting is required to define whether the Facebook app has permissions to post
-      ##   false == No permissions (default)
-      ##   true == Permissions for all users to post. App MUST have 'publish_actions' approved by Facebook!
-      ##   "username" == Set to local username to allow a single user to cross-post. The person who has created
-      ##                 the Facebook app will always be able to cross-post, even without 'publish_actions'.
-      #authorized: false
 
     ## OAuth credentials for Twitter
     twitter: ## Section
