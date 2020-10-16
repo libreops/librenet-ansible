@@ -68,10 +68,10 @@
   stat: path={{ diaspora_dir }}/Gemfile.lock
   register: gemfile_lock
 
-- name: Copy diaspora.yml
+- name: Copy diaspora.toml
   template: >
-    src=diaspora.yml.j2
-    dest="{{ diaspora_dir }}/config/diaspora.yml"
+    src=diaspora.toml.j2
+    dest="{{ diaspora_dir }}/config/diaspora.toml"
     owner=diaspora
     group=diaspora
     mode=0644
