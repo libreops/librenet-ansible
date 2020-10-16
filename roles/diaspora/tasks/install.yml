@@ -6,6 +6,8 @@
     - wget
     - ImageMagick-devel
     - nodejs
+    - libidn-devel
+    - libidn2-devel
     - libxslt-devel
     - libxml2-devel
     - gcc
@@ -117,21 +119,6 @@
     - diaspora
     - config
     - sidekiq
-    - yaml
-
-- name: Copy newrelic.yml
-  template: >
-    src=newrelic.yml.j2
-    dest="{{ diaspora_dir }}/config/newrelic.yml"
-    owner=diaspora
-    group=diaspora
-    mode=0644
-  notify:
-    - restart unicorn
-  tags:
-    - diaspora
-    - config
-    - newrelic
     - yaml
 
 - name: Copy .bundle/config
